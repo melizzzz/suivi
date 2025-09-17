@@ -1,0 +1,88 @@
+/* Styles personnalisés pour la plateforme de suivi */
+
+body {
+    background-color: #f8f9fa;
+}
+
+.card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+.card-header {
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    color: white;
+    border-radius: 10px 10px 0 0 !important;
+}
+
+.navbar-brand {
+    font-weight: bold;
+}
+
+.btn {
+    border-radius: 6px;
+}
+
+.table th {
+    border-top: none;
+    font-weight: 600;
+    color: #495057;
+}
+
+.badge {
+    font-size: 0.8em;
+}
+
+.alert {
+    border: none;
+    border-radius: 8px;
+}
+
+/* Couleurs pour les statistiques */
+.text-primary { color: #007bff !important; }
+.text-success { color: #28a745 !important; }
+.text-warning { color: #ffc107 !important; }
+.text-info { color: #17a2b8 !important; }
+
+/* Cartes de statistiques */
+.border-primary { border-color: #007bff !important; }
+.border-success { border-color: #28a745 !important; }
+.border-warning { border-color: #ffc107 !important; }
+.border-info { border-color: #17a2b8 !important; }
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .table-responsive {
+        font-size: 0.9em;
+    }
+    
+    .btn-sm {
+        font-size: 0.8em;
+        padding: 0.25rem 0.5rem;
+    }
+    
+    h2 {
+        font-size: 1.5rem;
+    }
+    
+    .card-body h3 {
+        font-size: 1.2rem;
+    }
+}
+
+/* Animation pour les cartes */
+.card:hover {
+    transform: translateY(-2px);
+    transition: transform 0.2s ease-in-out;
+}
+
+/* Styles pour les sessions */
+.list-group-item {
+    border-left: 4px solid #007bff;
+}
+
+.list-group-item:hover {
+    background-color: #f8f9fa;
+}

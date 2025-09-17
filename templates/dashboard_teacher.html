@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block title %}Tableau de Bord Professeur{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Tableau de Bord Professeur</h2>
+    <a href="{{ url_for('add_student') }}" class="btn btn-success">Ajouter un Élève</a>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        {% if students %}
+        <div class="card">
+            <div class="card-header">
+                <h5>Liste des Élèves ({{ students|length }})</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Nom</th>
+                                <th>Prénom</th>
+                                <th>Parent</th>
+                                <th>Date d'inscription</th>
+                                <th>Nb Sessions</th>
+                                <th>Total dû</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for student in students %}
+                            <tr>
+                                <td>{{ student.nom }}</td>
+                                <td>{{ student.prenom }}</td>
+                                <td>{{ student.parent.username }}</td>
+                                <td>{{ student.date_inscription.strftime('%d/%m/%Y') }}</td>
+                                <td>{{ student.sessions|length }}</td>
+                                <td>
+                                    {% set total_du = student.sessions|selectattr('payee', 'equalto', False)|map(attribute='prix')|sum %}
+                                    {{ "%.2f"|format(total_du) }}€
+                                </td>
+                                <td>
+                                    <a href="{{ url_for('view_student', student_id=student.id) }}" class="btn btn-sm btn-primary">Voir</a>
+                                    <a href="{{ url_for('add_session', student_id=student.id) }}" class="btn btn-sm btn-success">+ Session</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="alert alert-info">
+            <h5>Aucun élève inscrit</h5>
+            <p>Commencez par <a href="{{ url_for('add_student') }}">ajouter votre premier élève</a>.</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+{% if students %}
+<div class="row mt-4">
+    <div class="col-md-4">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="card-title">Total Élèves</h5>
+                <h2 class="text-primary">{{ students|length }}</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="card-title">Sessions ce mois</h5>
+                <h2 class="text-success">
+                    {% set sessions_ce_mois = students|map(attribute='sessions')|sum(start=[])|selectattr('date_session')|list %}
+                    {{ sessions_ce_mois|length }}
+                </h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="card-title">Total à recevoir</h5>
+                <h2 class="text-warning">
+                    {% set total_a_recevoir = students|map(attribute='sessions')|sum(start=[])|selectattr('payee', 'equalto', False)|map(attribute='prix')|sum %}
+                    {{ "%.2f"|format(total_a_recevoir) }}€
+                </h2>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

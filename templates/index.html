@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-body text-center">
+                <h1 class="card-title">Plateforme de Suivi des Élèves</h1>
+                <p class="card-text">
+                    Bienvenue sur la plateforme de suivi des cours particuliers. 
+                    Cette application permet aux professeurs de gérer leurs élèves et aux parents de suivre les progrès de leurs enfants.
+                </p>
+                
+                {% if not current_user.is_authenticated %}
+                <div class="mt-4">
+                    <a href="{{ url_for('login') }}" class="btn btn-primary me-2">Se Connecter</a>
+                    <a href="{{ url_for('register') }}" class="btn btn-outline-primary">S'Inscrire</a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        
+        {% if not current_user.is_authenticated %}
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Pour les Professeurs</h5>
+                        <p class="card-text">
+                            • Gérer la liste des élèves<br>
+                            • Enregistrer les séances<br>
+                            • Suivre les paiements<br>
+                            • Consulter l'historique
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Pour les Parents</h5>
+                        <p class="card-text">
+                            • Voir les séances de leur enfant<br>
+                            • Consulter le montant dû<br>
+                            • Suivre les progrès<br>
+                            • Historique des paiements
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
