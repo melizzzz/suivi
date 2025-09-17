@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}Tableau de bord - Professeur{% endblock %}
+
+{% block header %}Tableau de bord - Professeur{% endblock %}
+
+{% block content %}
+<h2>Gestion des Étudiants et Montants</h2>
+
+{% if student_stats %}
+<table>
+    <thead>
+        <tr>
+            <th>Nom de l'étudiant</th>
+            <th>Prix par séance</th>
+            <th>Nombre de séances</th>
+            <th>Montant dû</th>
+            <th>Montant payé</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for stats in student_stats %}
+        <tr>
+            <td>{{ stats.student.name }}</td>
+            <td class="montant">{{ "%.2f"|format(stats.student.prix_par_seance) }} €</td>
+            <td>{{ stats.total_sessions }}</td>
+            <td class="montant montant-du">{{ "%.2f"|format(stats.montant_du) }} €</td>
+            <td class="montant montant-paye">{{ "%.2f"|format(stats.montant_paye) }} €</td>
+            <td>
+                <a href="{{ url_for('add_session', student_id=stats.student.id) }}" class="btn">Ajouter séance</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h3>Séances récentes non payées</h3>
+<table>
+    <thead>
+        <tr>
+            <th>Étudiant</th>
+            <th>Date</th>
+            <th>Durée (min)</th>
+            <th>Montant</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for stats in student_stats %}
+            {% for session in stats.student.sessions %}
+                {% if not session.payee %}
+                <tr>
+                    <td>{{ stats.student.name }}</td>
+                    <td>{{ session.date_seance.strftime('%d/%m/%Y') }}</td>
+                    <td>{{ session.duree_minutes }}</td>
+                    <td class="montant montant-du">{{ "%.2f"|format(session.montant) }} €</td>
+                    <td>
+                        <a href="{{ url_for('mark_paid', session_id=session.id) }}" class="btn btn-success">Marquer payé</a>
+                    </td>
+                </tr>
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+    </tbody>
+</table>
+
+{% else %}
+<p>Aucun étudiant enregistré. <a href="{{ url_for('add_student') }}" class="btn">Ajouter votre premier étudiant</a></p>
+{% endif %}
+{% endblock %}
