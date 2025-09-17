@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}Mon Tableau de bord - Parent{% endblock %}
+
+{% block header %}Mon Tableau de bord - Parent{% endblock %}
+
+{% block content %}
+<h2>Suivi de mes enfants</h2>
+
+{% if children_stats %}
+    {% for child_stats in children_stats %}
+    <div style="margin-bottom: 30px; border: 1px solid #ddd; padding: 20px; border-radius: 8px;">
+        <h3>{{ child_stats.child.name }}</h3>
+        
+        <div style="display: flex; gap: 20px; margin-bottom: 20px;">
+            <div style="background-color: #f8f9fa; padding: 15px; border-radius: 4px;">
+                <strong>Prix par séance:</strong> 
+                <span class="montant">{{ "%.2f"|format(child_stats.child.prix_par_seance) }} €</span>
+            </div>
+            <div style="background-color: #fff3cd; padding: 15px; border-radius: 4px;">
+                <strong>Montant dû:</strong> 
+                <span class="montant montant-du">{{ "%.2f"|format(child_stats.montant_du) }} €</span>
+            </div>
+            <div style="background-color: #d4edda; padding: 15px; border-radius: 4px;">
+                <strong>Montant payé:</strong> 
+                <span class="montant montant-paye">{{ "%.2f"|format(child_stats.montant_paye) }} €</span>
+            </div>
+        </div>
+
+        {% if child_stats.sessions %}
+        <h4>Historique des séances</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Durée (min)</th>
+                    <th>Montant</th>
+                    <th>Statut de paiement</th>
+                    <th>Notes</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for session in child_stats.sessions %}
+                <tr>
+                    <td>{{ session.date_seance.strftime('%d/%m/%Y') }}</td>
+                    <td>{{ session.duree_minutes }}</td>
+                    <td class="montant {% if session.payee %}montant-paye{% else %}montant-du{% endif %}">
+                        {{ "%.2f"|format(session.montant) }} €
+                    </td>
+                    <td>
+                        {% if session.payee %}
+                            <span style="color: #28a745; font-weight: bold;">✓ Payé</span>
+                        {% else %}
+                            <span style="color: #dc3545; font-weight: bold;">⏳ En attente</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ session.notes or '-' }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>Aucune séance enregistrée pour le moment.</p>
+        {% endif %}
+    </div>
+    {% endfor %}
+
+{% else %}
+<p>Aucun enfant enregistré dans le système.</p>
+{% endif %}
+{% endblock %}

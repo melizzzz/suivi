@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}Ajouter une Séance{% endblock %}
+
+{% block content %}
+<h2>Ajouter une Séance pour {{ student.name }}</h2>
+
+<form method="POST">
+    <div class="form-group">
+        <label for="date_seance">Date de la séance:</label>
+        <input type="date" id="date_seance" name="date_seance" required>
+    </div>
+    
+    <div class="form-group">
+        <label for="duree_minutes">Durée (minutes):</label>
+        <input type="number" id="duree_minutes" name="duree_minutes" value="60" min="1" required>
+    </div>
+    
+    <div class="form-group">
+        <label for="montant">Montant (€):</label>
+        <input type="number" id="montant" name="montant" step="0.01" min="0" 
+               value="{{ student.prix_par_seance }}" 
+               placeholder="Laissez vide pour utiliser le prix par défaut ({{ student.prix_par_seance }} €)">
+        <small style="color: #666;">Prix par défaut: {{ student.prix_par_seance }} €</small>
+    </div>
+    
+    <div class="form-group">
+        <label for="notes">Notes (optionnel):</label>
+        <textarea id="notes" name="notes" rows="3"></textarea>
+    </div>
+    
+    <button type="submit" class="btn">Ajouter la séance</button>
+    <a href="{{ url_for('teacher_dashboard') }}" class="btn" style="background-color: #6c757d;">Annuler</a>
+</form>
+{% endblock %}
