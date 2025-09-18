@@ -16,6 +16,7 @@ app.use('/api/auth', authRouter);
 app.use('/api/students', require('./routes/students'));
 app.use('/api/sessions', require('./routes/sessions'));
 app.use('/api/payments', require('./routes/payments'));
+app.use('/api/classes', require('./routes/classes'));
 
 // Route de test
 app.get('/', (req, res) => {

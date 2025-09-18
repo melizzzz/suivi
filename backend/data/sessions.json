@@ -41,6 +41,31 @@
     "notes": "",
     "status": "completed",
     "id": "1758184177823kgmbyznjr",
-    "createdAt": "2025-09-18T08:29:37.823Z"
+    "createdAt": "2025-09-18T08:29:37.823Z",
+    "type": "individual"
+  },
+  {
+    "classId": "1",
+    "date": "2025-09-20T14:00:00.000Z",
+    "duration": 120,
+    "subject": "Physique",
+    "price": 40,
+    "notes": "Cours collectif sur la mécanique quantique - Introduction aux concepts de base",
+    "status": "scheduled",
+    "id": "class_session_1",
+    "createdAt": "2025-09-18T08:53:00.000Z",
+    "type": "class"
+  },
+  {
+    "classId": "1",
+    "date": "2025-09-21T10:00:00.000Z",
+    "duration": 90,
+    "subject": "Physique",
+    "price": 30,
+    "notes": "Travaux dirigés en groupe sur les exercices de thermodynamique",
+    "status": "completed",
+    "id": "class_session_2",
+    "createdAt": "2025-09-18T08:53:00.000Z",
+    "type": "class"
   }
 ]

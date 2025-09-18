@@ -32,18 +32,42 @@ router.get('/', authenticateToken, async (req, res) => {
       });
     }
 
-    // Enrichir avec les informations des élèves
+    // Enrichir avec les informations des élèves et classes
     const students = await db.read('students');
+    const classes = await db.read('classes');
     const enrichedSessions = sessions.map(session => {
-      const student = students.find(s => s.id === session.studentId);
-      return {
-        ...session,
-        student: student ? {
+      let enrichedSession = { ...session };
+
+      if (session.studentId) {
+        const student = students.find(s => s.id === session.studentId);
+        enrichedSession.student = student ? {
           id: student.id,
           firstName: student.firstName,
           lastName: student.lastName
-        } : null
-      };
+        } : null;
+      }
+
+      if (session.classId) {
+        const classItem = classes.find(c => c.id === session.classId);
+        if (classItem) {
+          const classStudents = classItem.studentIds.map(studentId => {
+            const student = students.find(s => s.id === studentId);
+            return student ? {
+              id: student.id,
+              firstName: student.firstName,
+              lastName: student.lastName
+            } : null;
+          }).filter(s => s !== null);
+
+          enrichedSession.class = {
+            id: classItem.id,
+            name: classItem.name,
+            students: classStudents
+          };
+        }
+      }
+
+      return enrichedSession;
     });
 
     res.json({
@@ -122,32 +146,53 @@ router.post('/', authenticateToken, async (req, res) => {
       });
     }
 
-    const { studentId, date, duration, subject, price, notes, status = 'completed' } = req.body;
+    const { studentId, classId, date, duration, subject, price, notes, status = 'completed' } = req.body;
 
-    if (!studentId || !date || !duration || !price) {
+    if (!date || !duration || !price) {
       return res.status(400).json({
         success: false,
-        message: 'Élève, date, durée et prix sont requis'
+        message: 'Date, durée et prix sont requis'
       });
     }
 
-    // Vérifier que l'élève existe
-    const student = await db.findById('students', studentId);
-    if (!student) {
-      return res.status(404).json({
+    if (!studentId && !classId) {
+      return res.status(400).json({
         success: false,
-        message: 'Élève non trouvé'
+        message: 'Élève ou classe est requis'
       });
+    }
+
+    // Vérifier que l'élève ou la classe existe
+    if (studentId) {
+      const student = await db.findById('students', studentId);
+      if (!student) {
+        return res.status(404).json({
+          success: false,
+          message: 'Élève non trouvé'
+        });
+      }
+    }
+
+    if (classId) {
+      const classItem = await db.findById('classes', classId);
+      if (!classItem) {
+        return res.status(404).json({
+          success: false,
+          message: 'Classe non trouvée'
+        });
+      }
     }
 
     const newSession = await db.add('sessions', {
-      studentId,
+      studentId: studentId || null,
+      classId: classId || null,
       date: new Date(date).toISOString(),
       duration: parseInt(duration),
       subject: 'Physique', // Matière fixe pour toutes les séances
       price: parseFloat(price),
       notes: notes || '',
-      status
+      status,
+      type: classId ? 'class' : 'individual' // Type de séance
     });
 
     res.status(201).json({

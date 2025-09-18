@@ -154,4 +154,32 @@ export const paymentsService = {
   }
 };
 
+// Services pour les classes
+export const classesService = {
+  getAll: async () => {
+    const response = await api.get('/classes');
+    return response.data;
+  },
+
+  getById: async (id: string) => {
+    const response = await api.get(`/classes/${id}`);
+    return response.data;
+  },
+
+  create: async (classData: any) => {
+    const response = await api.post('/classes', classData);
+    return response.data;
+  },
+
+  update: async (id: string, classData: any) => {
+    const response = await api.put(`/classes/${id}`, classData);
+    return response.data;
+  },
+
+  delete: async (id: string) => {
+    const response = await api.delete(`/classes/${id}`);
+    return response.data;
+  }
+};
+
 export default api;
