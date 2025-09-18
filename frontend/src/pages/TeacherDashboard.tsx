@@ -203,6 +203,23 @@ const TeacherDashboard: React.FC = () => {
     }
   };
 
+  const handleDeleteStudent = async (studentId: string, studentName: string) => {
+    if (window.confirm(`Êtes-vous sûr de vouloir supprimer l'élève ${studentName} ? Cette action est irréversible.`)) {
+      try {
+        const response = await studentsService.delete(studentId);
+        if (response.success) {
+          setStudents(students.filter(s => s.id !== studentId));
+          // Aussi filtrer les séances et paiements de cet élève
+          setSessions(sessions.filter(s => s.studentId !== studentId));
+          setPayments(payments.filter(p => p.studentId !== studentId));
+        }
+      } catch (error) {
+        console.error('Erreur lors de la suppression de élève:', error);
+        alert('Erreur lors de la suppression de élève');
+      }
+    }
+  };
+
   // Calculs pour la vue d'ensemble
   const totalStudents = students.filter(s => s.active).length;
   const totalSessions = sessions.length;
@@ -242,7 +259,7 @@ const TeacherDashboard: React.FC = () => {
             className={`nav-btn ${activeTab === 'classes' ? 'active' : ''}`}
             onClick={() => setActiveTab('classes')}
           >
-            🏫 Classes
+            👥 Groupes d'élèves
           </button>
           <button
             className={`nav-btn ${activeTab === 'sessions' ? 'active' : ''}`}
@@ -371,7 +388,16 @@ const TeacherDashboard: React.FC = () => {
             <div className="students-grid">
               {students.map(student => (
                 <div key={student.id} className="student-card">
-                  <h3>{student.firstName} {student.lastName}</h3>
+                  <div className="student-header">
+                    <h3>{student.firstName} {student.lastName}</h3>
+                    <button 
+                      className="delete-btn"
+                      onClick={() => handleDeleteStudent(student.id, `${student.firstName} ${student.lastName}`)}
+                      title="Supprimer cet élève"
+                    >
+                      🗑️
+                    </button>
+                  </div>
                   <p>📧 {student.email}</p>
                   <p>📱 {student.phone}</p>
                   <p>📚 Physique</p>
@@ -487,7 +513,7 @@ const TeacherDashboard: React.FC = () => {
                   <div className="session-header">
                     <h3>
                       {session.type === 'class' && session.class ? 
-                        `🏫 ${session.class.name}` : 
+                        `👥 ${session.class.name}` : 
                         `👤 ${session.student?.firstName} ${session.student?.lastName}`
                       }
                     </h3>
@@ -511,30 +537,30 @@ const TeacherDashboard: React.FC = () => {
         {activeTab === 'classes' && (
           <div className="classes-tab">
             <div className="tab-header">
-              <h2>🏫 Gestion des Classes</h2>
+              <h2>👥 Gestion des Groupes d'Élèves</h2>
               <button 
                 className="add-btn"
                 onClick={() => setShowAddClass(true)}
               >
-                ➕ Nouvelle classe
+                ➕ Nouveau groupe
               </button>
             </div>
 
             {showAddClass && (
               <div className="modal-overlay">
                 <div className="modal">
-                  <h3>Créer une nouvelle classe</h3>
+                  <h3>Créer un nouveau groupe d'élèves</h3>
                   <form onSubmit={handleAddClass}>
                     <input
                       type="text"
-                      placeholder="Nom de la classe"
+                      placeholder="Nom du groupe"
                       value={newClass.name}
                       onChange={(e) => setNewClass({...newClass, name: e.target.value})}
                       required
                     />
                     <input
                       type="number"
-                      placeholder="Tarif horaire de la classe (€)"
+                      placeholder="Tarif horaire du groupe (€)"
                       step="0.01"
                       value={newClass.hourlyRate}
                       onChange={(e) => setNewClass({...newClass, hourlyRate: e.target.value})}
@@ -563,7 +589,7 @@ const TeacherDashboard: React.FC = () => {
                     <div className="modal-buttons">
                       <button type="button" onClick={() => setShowAddClass(false)}>Annuler</button>
                       <button type="submit" disabled={newClass.studentIds.length < 2}>
-                        Créer la classe
+                        Créer le groupe
                       </button>
                     </div>
                   </form>
@@ -574,8 +600,8 @@ const TeacherDashboard: React.FC = () => {
             <div className="classes-grid">
               {classes.map(classItem => (
                 <div key={classItem.id} className="class-card">
-                  <h3>🏫 {classItem.name}</h3>
-                  <p>👥 {classItem.students?.length || 0} élèves</p>
+                  <h3>👥 {classItem.name}</h3>
+                  <p>� {classItem.students?.length || 0} élèves</p>
                   <p>💰 {classItem.hourlyRate}€/heure</p>
                   {classItem.description && <p>📝 {classItem.description}</p>}
                   <div className="class-students">
@@ -587,7 +613,7 @@ const TeacherDashboard: React.FC = () => {
                     </ul>
                   </div>
                   <div className={`status ${classItem.active ? 'active' : 'inactive'}`}>
-                    {classItem.active ? '✅ Active' : '❌ Inactive'}
+                    {classItem.active ? '✅ Actif' : '❌ Inactif'}
                   </div>
                 </div>
               ))}
@@ -605,7 +631,7 @@ const TeacherDashboard: React.FC = () => {
               </div>
               <div className="legend-item">
                 <div className="legend-color legend-class"></div>
-                <span>Cours en classe</span>
+                <span>Cours en groupe</span>
               </div>
               <div className="legend-item">
                 <div className="legend-color legend-scheduled"></div>
