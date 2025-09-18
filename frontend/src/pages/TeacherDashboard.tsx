@@ -90,7 +90,7 @@ const TeacherDashboard: React.FC = () => {
     try {
       const studentData = {
         ...newStudent,
-        subjects: newStudent.subjects.split(',').map(s => s.trim()),
+        subjects: ['Physique'], // Matière fixe
         hourlyRate: parseFloat(newStudent.hourlyRate)
       };
       
@@ -110,6 +110,7 @@ const TeacherDashboard: React.FC = () => {
     try {
       const sessionData = {
         ...newSession,
+        subject: 'Physique', // Matière fixe
         duration: parseInt(newSession.duration),
         price: parseFloat(newSession.price)
       };
@@ -272,10 +273,10 @@ const TeacherDashboard: React.FC = () => {
                     />
                     <input
                       type="text"
-                      placeholder="Matières (séparées par des virgules)"
-                      value={newStudent.subjects}
-                      onChange={(e) => setNewStudent({...newStudent, subjects: e.target.value})}
-                      required
+                      placeholder="Matières enseignées"
+                      value="Physique"
+                      disabled
+                      style={{ backgroundColor: '#f5f5f5', color: '#666' }}
                     />
                     <input
                       type="number"
@@ -299,7 +300,7 @@ const TeacherDashboard: React.FC = () => {
                   <h3>{student.firstName} {student.lastName}</h3>
                   <p>📧 {student.email}</p>
                   <p>📱 {student.phone}</p>
-                  <p>📚 {student.subjects.join(', ')}</p>
+                  <p>📚 Physique</p>
                   <p>💰 {student.hourlyRate}€/h</p>
                   <div className={`status ${student.active ? 'active' : 'inactive'}`}>
                     {student.active ? '✅ Actif' : '❌ Inactif'}
@@ -352,13 +353,9 @@ const TeacherDashboard: React.FC = () => {
                       onChange={(e) => setNewSession({...newSession, duration: e.target.value})}
                       required
                     />
-                    <input
-                      type="text"
-                      placeholder="Matière"
-                      value={newSession.subject}
-                      onChange={(e) => setNewSession({...newSession, subject: e.target.value})}
-                      required
-                    />
+                    <div className="subject-display">
+                      <label>Matière: <strong>Physique</strong></label>
+                    </div>
                     <input
                       type="number"
                       placeholder="Prix (€)"

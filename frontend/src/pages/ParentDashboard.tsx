@@ -148,7 +148,7 @@ const ParentDashboard: React.FC = () => {
               <h2>👤 {selectedStudent.firstName} {selectedStudent.lastName}</h2>
               <div className="student-details">
                 <p>📧 {selectedStudent.email}</p>
-                <p>📚 Matières: {selectedStudent.subjects.join(', ')}</p>
+                <p>📚 Matière: Physique</p>
                 <p>💰 Tarif: {selectedStudent.hourlyRate}€/heure</p>
               </div>
             </div>

@@ -446,3 +446,23 @@
     gap: 5px;
   }
 }
+
+.subject-display {
+  padding: 15px;
+  background-color: #e8f5e8;
+  border: 2px solid #4caf50;
+  border-radius: 8px;
+  text-align: center;
+  margin: 10px 0;
+}
+
+.subject-display label {
+  font-size: 16px;
+  color: #2e7d32;
+  margin: 0;
+}
+
+.subject-display strong {
+  color: #1b5e20;
+  font-size: 18px;
+}

@@ -124,10 +124,10 @@ router.post('/', authenticateToken, async (req, res) => {
 
     const { studentId, date, duration, subject, price, notes, status = 'completed' } = req.body;
 
-    if (!studentId || !date || !duration || !subject || !price) {
+    if (!studentId || !date || !duration || !price) {
       return res.status(400).json({
         success: false,
-        message: 'Élève, date, durée, matière et prix sont requis'
+        message: 'Élève, date, durée et prix sont requis'
       });
     }
 
@@ -144,7 +144,7 @@ router.post('/', authenticateToken, async (req, res) => {
       studentId,
       date: new Date(date).toISOString(),
       duration: parseInt(duration),
-      subject,
+      subject: 'Physique', // Matière fixe pour toutes les séances
       price: parseFloat(price),
       notes: notes || '',
       status

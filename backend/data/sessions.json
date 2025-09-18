@@ -4,9 +4,9 @@
     "studentId": "1",
     "date": "2025-09-10T22:34:55.829Z",
     "duration": 60,
-    "subject": "mathématiques",
+    "subject": "Physique",
     "price": 25,
-    "notes": "Révision des équations du second degré. Bons progrès !",
+    "notes": "Révision des équations du mouvement. Bons progrès !",
     "status": "completed",
     "createdAt": "2025-09-17T22:34:55.829Z"
   },
@@ -15,7 +15,7 @@
     "studentId": "1",
     "date": "2025-09-14T22:34:55.829Z",
     "duration": 90,
-    "subject": "physique",
+    "subject": "Physique",
     "price": 37.5,
     "notes": "Étude des forces et de la mécanique. Très attentive.",
     "status": "completed",
@@ -26,10 +26,21 @@
     "studentId": "1",
     "date": "2025-09-19T22:34:55.829Z",
     "duration": 60,
-    "subject": "mathématiques",
+    "subject": "Physique",
     "price": 25,
-    "notes": "",
+    "notes": "Préparation du contrôle sur l'optique",
     "status": "scheduled",
     "createdAt": "2025-09-17T22:34:55.829Z"
+  },
+  {
+    "studentId": "1758184148201as378ker4",
+    "date": "2025-09-19T08:29:00.000Z",
+    "duration": 2,
+    "subject": "Physique",
+    "price": 2000,
+    "notes": "",
+    "status": "completed",
+    "id": "1758184177823kgmbyznjr",
+    "createdAt": "2025-09-18T08:29:37.823Z"
   }
 ]

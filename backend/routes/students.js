@@ -92,10 +92,10 @@ router.post('/', authenticateToken, async (req, res) => {
 
     const { firstName, lastName, email, phone, subjects, hourlyRate, parentId } = req.body;
 
-    if (!firstName || !lastName || !subjects || !hourlyRate) {
+    if (!firstName || !lastName || !hourlyRate) {
       return res.status(400).json({
         success: false,
-        message: 'Prénom, nom, matières et tarif horaire sont requis'
+        message: 'Prénom, nom et tarif horaire sont requis'
       });
     }
 
@@ -104,7 +104,7 @@ router.post('/', authenticateToken, async (req, res) => {
       lastName,
       email,
       phone,
-      subjects: Array.isArray(subjects) ? subjects : [subjects],
+      subjects: ['Physique'], // Matière fixe pour tous les élèves
       hourlyRate: parseFloat(hourlyRate),
       parentId,
       active: true
