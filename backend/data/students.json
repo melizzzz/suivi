@@ -1,0 +1,17 @@
+[
+  {
+    "id": "1",
+    "firstName": "Emma",
+    "lastName": "Martin",
+    "email": "emma.martin@email.com",
+    "phone": "0123456789",
+    "subjects": [
+      "mathématiques",
+      "physique"
+    ],
+    "hourlyRate": 25,
+    "parentId": "2",
+    "createdAt": "2025-09-17T22:34:55.829Z",
+    "active": true
+  }
+]

@@ -1,0 +1,29 @@
+[
+  {
+    "id": "1",
+    "studentId": "1",
+    "amount": 25,
+    "sessionIds": [
+      "1"
+    ],
+    "status": "paid",
+    "paymentMethod": "Espèces",
+    "dueDate": "2025-09-12T22:34:55.829Z",
+    "paidDate": "2025-09-12T22:34:55.829Z",
+    "createdAt": "2025-09-17T22:34:55.830Z"
+  },
+  {
+    "id": "2",
+    "studentId": "1",
+    "amount": 37.5,
+    "sessionIds": [
+      "2"
+    ],
+    "status": "paid",
+    "paymentMethod": "Espèces",
+    "dueDate": "2025-09-24T22:34:55.830Z",
+    "paidDate": "2025-09-18T08:08:32.346Z",
+    "createdAt": "2025-09-17T22:34:55.830Z",
+    "updatedAt": "2025-09-18T08:08:32.346Z"
+  }
+]

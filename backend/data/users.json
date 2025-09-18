@@ -1,0 +1,18 @@
+[
+  {
+    "id": "1",
+    "email": "professeur@example.com",
+    "password": "$2b$10$ILF9kMPg3vL5p.ehDV1mqeaviw3z0KUrZ6MusKQ2Oh1PU8uhDlUju",
+    "role": "teacher",
+    "name": "Professeur Principal",
+    "createdAt": "2025-09-17T22:34:55.828Z"
+  },
+  {
+    "id": "2",
+    "email": "parent@example.com",
+    "password": "$2b$10$EpsS4Jy8ocMHB7S8sl/wAOJXKKRyN7UdyDLWGGiZcGrUHeT4NomH6",
+    "role": "parent",
+    "name": "Marie Martin",
+    "createdAt": "2025-09-17T22:34:55.829Z"
+  }
+]
