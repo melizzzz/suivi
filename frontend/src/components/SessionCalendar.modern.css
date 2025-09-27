@@ -1,0 +1,330 @@
+/* =========================================
+   CALENDRIER PHYSIQUE - STYLE MODERNE
+   ========================================= */
+
+/* Conteneur principal du calendrier */
+.rbc-calendar {
+  background: var(--bg-stellar-white);
+  border-radius: var(--radius-molecule);
+  box-shadow: var(--shadow-atom);
+  border: 1px solid rgba(59, 130, 246, 0.1);
+  overflow: hidden;
+  position: relative;
+}
+
+.rbc-calendar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--gradient-quantum);
+  background-size: 300% 300%;
+  animation: magnetic-field 8s ease-in-out infinite;
+  z-index: 1;
+}
+
+/* Header du calendrier */
+.rbc-header {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), rgba(107, 70, 193, 0.05));
+  color: var(--text-proton);
+  font-weight: 700;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 16px 8px;
+  border-bottom: 1px solid rgba(59, 130, 246, 0.1);
+  position: relative;
+}
+
+.rbc-header + .rbc-header {
+  border-left: 1px solid rgba(59, 130, 246, 0.1);
+}
+
+/* Navigation du calendrier */
+.rbc-toolbar {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.03), rgba(107, 70, 193, 0.03));
+  padding: 20px 24px;
+  border-bottom: 1px solid rgba(59, 130, 246, 0.1);
+  margin-bottom: 0;
+  position: relative;
+  z-index: 2;
+}
+
+.rbc-toolbar button {
+  background: var(--bg-stellar-white);
+  border: 2px solid rgba(59, 130, 246, 0.2);
+  color: var(--text-proton);
+  padding: 8px 16px;
+  border-radius: var(--radius-atom);
+  font-weight: 600;
+  font-size: 13px;
+  transition: var(--transition-quantum);
+  position: relative;
+  overflow: hidden;
+}
+
+.rbc-toolbar button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.1), transparent);
+  transition: var(--transition-particle);
+}
+
+.rbc-toolbar button:hover::before {
+  left: 100%;
+}
+
+.rbc-toolbar button:hover {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(107, 70, 193, 0.1));
+  border-color: var(--primary-quantum-blue);
+  transform: translateY(-1px);
+}
+
+.rbc-toolbar button.rbc-active {
+  background: var(--gradient-quantum);
+  color: white;
+  border-color: transparent;
+  box-shadow: var(--shadow-atom);
+}
+
+.rbc-toolbar .rbc-toolbar-label {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-proton);
+  margin: 0 20px;
+  text-shadow: 0 2px 4px rgba(59, 130, 246, 0.1);
+}
+
+/* Cellules du calendrier */
+.rbc-month-view,
+.rbc-time-view {
+  background: var(--bg-stellar-white);
+}
+
+.rbc-date-cell {
+  text-align: center;
+  padding: 8px 4px;
+  color: var(--text-electron);
+  font-weight: 500;
+  transition: var(--transition-quantum);
+}
+
+.rbc-date-cell:hover {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), rgba(107, 70, 193, 0.05));
+  border-radius: var(--radius-atom);
+}
+
+.rbc-date-cell.rbc-off-range {
+  color: var(--text-photon);
+  opacity: 0.5;
+}
+
+.rbc-date-cell.rbc-now {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(107, 70, 193, 0.1));
+  color: var(--primary-quantum-blue);
+  font-weight: 700;
+  border-radius: var(--radius-atom);
+  border: 2px solid rgba(59, 130, 246, 0.2);
+}
+
+/* Événements du calendrier */
+.rbc-event {
+  border-radius: var(--radius-atom);
+  border: none;
+  padding: 4px 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: white;
+  position: relative;
+  overflow: hidden;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  transition: var(--transition-quantum);
+}
+
+.rbc-event::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: var(--transition-particle);
+}
+
+.rbc-event:hover::before {
+  left: 100%;
+}
+
+.rbc-event:hover {
+  transform: scale(1.02);
+  box-shadow: var(--shadow-energy);
+}
+
+/* Événements individuels - Particules */
+.rbc-event.individual-session {
+  background: linear-gradient(135deg, var(--accent-electric-blue), #2563eb);
+  box-shadow: 0 2px 10px rgba(59, 130, 246, 0.3);
+}
+
+.rbc-event.individual-session::after {
+  content: '⚛️';
+  position: absolute;
+  top: 2px;
+  right: 4px;
+  font-size: 10px;
+  opacity: 0.8;
+}
+
+/* Événements de groupe - Champs magnétiques */
+.rbc-event.class-session {
+  background: linear-gradient(135deg, var(--accent-neutron-green), #059669);
+  box-shadow: 0 2px 10px rgba(16, 185, 129, 0.3);
+}
+
+.rbc-event.class-session::after {
+  content: '🧲';
+  position: absolute;
+  top: 2px;
+  right: 4px;
+  font-size: 10px;
+  opacity: 0.8;
+}
+
+/* Sélection */
+.rbc-slot-selection {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(107, 70, 193, 0.2));
+  border: 2px dashed var(--primary-quantum-blue);
+  border-radius: var(--radius-atom);
+}
+
+/* Today highlight */
+.rbc-today {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), rgba(107, 70, 193, 0.05));
+  border-radius: var(--radius-atom);
+}
+
+/* Légende du calendrier */
+.calendar-legend {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  padding: 20px;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.02), rgba(107, 70, 193, 0.02));
+  border-radius: 0 0 var(--radius-molecule) var(--radius-molecule);
+  border-top: 1px solid rgba(59, 130, 246, 0.1);
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-electron);
+}
+
+.legend-color {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  position: relative;
+  overflow: hidden;
+}
+
+.legend-color::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 50%;
+  animation: quantum-pulse 2s infinite;
+}
+
+.legend-individual {
+  background: linear-gradient(135deg, var(--accent-electric-blue), #2563eb);
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+}
+
+.legend-group {
+  background: linear-gradient(135deg, var(--accent-neutron-green), #059669);
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+}
+
+/* Popup d'événement */
+.rbc-overlay {
+  background: var(--bg-stellar-white);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: var(--radius-molecule);
+  box-shadow: var(--shadow-molecule);
+  backdrop-filter: blur(10px);
+}
+
+.rbc-overlay-header {
+  background: var(--gradient-quantum);
+  color: white;
+  padding: 12px 16px;
+  border-radius: var(--radius-molecule) var(--radius-molecule) 0 0;
+  font-weight: 600;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .rbc-toolbar {
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+  }
+  
+  .rbc-toolbar .rbc-btn-group {
+    display: flex;
+    gap: 8px;
+  }
+  
+  .rbc-toolbar .rbc-toolbar-label {
+    margin: 0;
+    order: -1;
+  }
+  
+  .calendar-legend {
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+  }
+  
+  .rbc-event {
+    font-size: 11px;
+    padding: 2px 6px;
+  }
+}
+
+/* Animations spéciales pour le calendrier */
+@keyframes calendar-glow {
+  0%, 100% { 
+    box-shadow: 0 0 5px rgba(59, 130, 246, 0.3);
+  }
+  50% { 
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.6);
+  }
+}
+
+.rbc-calendar:hover {
+  animation: calendar-glow 2s ease-in-out infinite;
+}
+
+/* Effets de particules sur les événements */
+.rbc-event.individual-session:hover {
+  animation: quantum-pulse 0.5s ease-out;
+}
+
+.rbc-event.class-session:hover {
+  animation: aurora-dance 0.5s ease-out;
+}

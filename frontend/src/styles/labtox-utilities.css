@@ -1,0 +1,115 @@
+/* =========================================
+   UTILITIES TAILWIND-LIKE
+   Classes utilitaires pour LabTox
+   ========================================= */
+
+/* Grid System */
+.grid { display: grid; }
+.grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+.grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+@media (min-width: 768px) {
+  .md\\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .md\\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .md\\:grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
+@media (min-width: 1024px) {
+  .lg\\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .lg\\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .lg\\:grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
+/* Gap */
+.gap-1 { gap: var(--space-1); }
+.gap-2 { gap: var(--space-2); }
+.gap-3 { gap: var(--space-3); }
+.gap-4 { gap: var(--space-4); }
+.gap-5 { gap: var(--space-5); }
+.gap-6 { gap: var(--space-6); }
+.gap-8 { gap: var(--space-8); }
+
+/* Flexbox */
+.flex { display: flex; }
+.flex-1 { flex: 1 1 0%; }
+.flex-col { flex-direction: column; }
+.items-center { align-items: center; }
+.items-start { align-items: flex-start; }
+.items-end { align-items: flex-end; }
+.justify-center { justify-content: center; }
+.justify-between { justify-content: space-between; }
+.justify-end { justify-content: flex-end; }
+
+/* Spacing */
+.space-y-1 > * + * { margin-top: var(--space-1); }
+.space-y-2 > * + * { margin-top: var(--space-2); }
+.space-y-3 > * + * { margin-top: var(--space-3); }
+.space-y-4 > * + * { margin-top: var(--space-4); }
+.space-y-6 > * + * { margin-top: var(--space-6); }
+
+/* Margins */
+.mb-2 { margin-bottom: var(--space-2); }
+.mb-4 { margin-bottom: var(--space-4); }
+.mb-6 { margin-bottom: var(--space-6); }
+.mb-8 { margin-bottom: var(--space-8); }
+
+/* Padding */
+.p-3 { padding: var(--space-3); }
+.p-4 { padding: var(--space-4); }
+
+/* Width & Height */
+.w-10 { width: 2.5rem; }
+.w-16 { width: 4rem; }
+.h-10 { height: 2.5rem; }
+.h-16 { height: 4rem; }
+.h-screen { height: 100vh; }
+
+/* Background */
+.bg-gray-50 { background-color: var(--gray-50); }
+.bg-indigo-100 { background-color: rgba(99, 102, 241, 0.1); }
+.bg-gradient-to-r { background-image: linear-gradient(to right, var(--tw-gradient-stops)); }
+
+.from-indigo-50 { --tw-gradient-from: #eef2ff; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, transparent); }
+.to-purple-50 { --tw-gradient-to: #faf5ff; }
+.from-cyan-50 { --tw-gradient-from: #ecfeff; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, transparent); }
+.to-blue-50 { --tw-gradient-to: #eff6ff; }
+.from-emerald-50 { --tw-gradient-from: #ecfdf5; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, transparent); }
+.to-green-50 { --tw-gradient-to: #f0fdf4; }
+
+/* Border */
+.border-4 { border-width: 4px; }
+.border-indigo-200 { border-color: #c7d2fe; }
+.border-t-indigo-600 { border-top-color: #4f46e5; }
+.rounded-full { border-radius: var(--radius-full); }
+.rounded-lg { border-radius: var(--radius-lg); }
+
+/* Text */
+.text-center { text-align: center; }
+.text-lg { font-size: var(--text-lg); }
+.text-sm { font-size: var(--text-sm); }
+.text-xs { font-size: var(--text-xs); }
+.text-2xl { font-size: var(--text-2xl); }
+.font-medium { font-weight: var(--font-medium); }
+.font-bold { font-weight: var(--font-bold); }
+
+.text-gray-500 { color: var(--gray-500); }
+.text-gray-600 { color: var(--gray-600); }
+.text-gray-400 { color: var(--gray-400); }
+.text-indigo-600 { color: var(--primary-brand); }
+.text-cyan-600 { color: var(--secondary-brand); }
+.text-emerald-600 { color: var(--accent-success); }
+
+/* Animations */
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Utilities */
+.mx-auto { margin-left: auto; margin-right: auto; }

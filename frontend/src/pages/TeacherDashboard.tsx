@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { useAuth } from '../context/AuthContext';
 import { studentsService, sessionsService, paymentsService, classesService } from '../services/api';
 import SessionCalendar from '../components/SessionCalendar';
+import UserMenu from '../components/UserMenu';
 import './TeacherDashboard.css';
 
 interface Student {
@@ -69,7 +69,7 @@ interface Payment {
 }
 
 const TeacherDashboard: React.FC = () => {
-  const { user, logout } = useAuth();
+  // const { user, logout } = useAuth(); // Maintenant géré par UserMenu
   const [activeTab, setActiveTab] = useState<'overview' | 'students' | 'sessions' | 'classes' | 'calendar' | 'payments'>('overview');
   const [students, setStudents] = useState<Student[]>([]);
   const [sessions, setSessions] = useState<Session[]>([]);
@@ -81,7 +81,7 @@ const TeacherDashboard: React.FC = () => {
   const [showAddStudent, setShowAddStudent] = useState(false);
   const [showAddSession, setShowAddSession] = useState(false);
   const [showAddClass, setShowAddClass] = useState(false);
-  const [showAddPayment, setShowAddPayment] = useState(false);
+  // const [showAddPayment, setShowAddPayment] = useState(false); // Pas encore implémenté
 
   // États pour les formulaires
   const [newStudent, setNewStudent] = useState({
@@ -93,9 +93,9 @@ const TeacherDashboard: React.FC = () => {
   const [newClass, setNewClass] = useState({
     name: '', studentIds: [] as string[], hourlyRate: '', description: ''
   });
-  const [newPayment, setNewPayment] = useState({
-    studentId: '', amount: '', dueDate: '', paymentMethod: ''
-  });
+  // const [newPayment, setNewPayment] = useState({
+  //   studentId: '', amount: '', dueDate: '', paymentMethod: ''
+  // }); // Pas encore implémenté
 
   useEffect(() => {
     loadData();
@@ -233,82 +233,75 @@ const TeacherDashboard: React.FC = () => {
   return (
     <div className="teacher-dashboard">
       <header className="dashboard-header">
-        <div className="header-left">
-          <h1>📚 Dashboard Professeur</h1>
-          <p>Bienvenue {user?.name}</p>
-        </div>
-        <button onClick={logout} className="logout-btn">
-          🚪 Déconnexion
-        </button>
-      </header>
-
-              <nav className="dashboard-nav">
+        <nav className="header-nav">
           <button
-            className={`nav-btn ${activeTab === 'overview' ? 'active' : ''}`}
+            className={`nav-button ${activeTab === 'overview' ? 'active' : ''}`}
             onClick={() => setActiveTab('overview')}
           >
-            📊 Vue d'ensemble
+            Vue d'ensemble
           </button>
           <button
-            className={`nav-btn ${activeTab === 'students' ? 'active' : ''}`}
+            className={`nav-button ${activeTab === 'students' ? 'active' : ''}`}
             onClick={() => setActiveTab('students')}
           >
-            👥 Élèves
+            Élèves
           </button>
           <button
-            className={`nav-btn ${activeTab === 'classes' ? 'active' : ''}`}
+            className={`nav-button ${activeTab === 'classes' ? 'active' : ''}`}
             onClick={() => setActiveTab('classes')}
           >
-            👥 Groupes d'élèves
+            Groupes d'élèves
           </button>
           <button
-            className={`nav-btn ${activeTab === 'sessions' ? 'active' : ''}`}
+            className={`nav-button ${activeTab === 'sessions' ? 'active' : ''}`}
             onClick={() => setActiveTab('sessions')}
           >
-            � Séances
+            Séances
           </button>
           <button
-            className={`nav-btn ${activeTab === 'calendar' ? 'active' : ''}`}
+            className={`nav-button ${activeTab === 'calendar' ? 'active' : ''}`}
             onClick={() => setActiveTab('calendar')}
           >
-            📅 Calendrier
+            Calendrier
           </button>
           <button
-            className={`nav-btn ${activeTab === 'payments' ? 'active' : ''}`}
+            className={`nav-button ${activeTab === 'payments' ? 'active' : ''}`}
             onClick={() => setActiveTab('payments')}
           >
-            💰 Paiements
+            Paiements
           </button>
         </nav>
+        <UserMenu />
+      </header>
 
       <main className="dashboard-content">
         {activeTab === 'overview' && (
           <div className="overview-tab">
             <div className="stats-grid">
               <div className="stat-card">
-                <h3>👥 Élèves actifs</h3>
+                <h3>Élèves actifs</h3>
                 <div className="stat-number">{totalStudents}</div>
               </div>
               <div className="stat-card">
-                <h3>📅 Séances données</h3>
+                <h3>Séances données</h3>
                 <div className="stat-number">{totalSessions}</div>
               </div>
               <div className="stat-card">
-                <h3>💰 Revenus totaux</h3>
+                <h3>Revenus totaux</h3>
                 <div className="stat-number">{totalRevenue}€</div>
               </div>
               <div className="stat-card">
-                <h3>⏳ Paiements en attente</h3>
+                <h3>Paiements en attente</h3>
                 <div className="stat-number">{pendingPayments}</div>
               </div>
             </div>
 
             <div className="recent-activity">
-              <h2>📈 Activité récente</h2>
+              <h2>Activité récente</h2>
               <div className="activity-list">
                 {sessions.slice(-5).reverse().map(session => (
                   <div key={session.id} className="activity-item">
-                    <span>📚 Séance de {session.subject} avec {session.student?.firstName} {session.student?.lastName}</span>
+                    <span>Séance de {session.subject} avec {session.student?.firstName} {session.student?.lastName}</span>
                     <span className="activity-date">{new Date(session.date).toLocaleDateString()}</span>
                   </div>
                 ))}
@@ -320,7 +313,7 @@ const TeacherDashboard: React.FC = () => {
         {activeTab === 'students' && (
           <div className="students-tab">
             <div className="tab-header">
-              <h2>👥 Gestion des Élèves</h2>
+              <h2>Gestion des Élèves</h2>
               <button 
                 className="add-btn"
                 onClick={() => setShowAddStudent(true)}
@@ -395,15 +388,15 @@ const TeacherDashboard: React.FC = () => {
                       onClick={() => handleDeleteStudent(student.id, `${student.firstName} ${student.lastName}`)}
                       title="Supprimer cet élève"
                     >
-                      🗑️
+                      Supprimer
                     </button>
                   </div>
-                  <p>📧 {student.email}</p>
-                  <p>📱 {student.phone}</p>
-                  <p>📚 Physique</p>
-                  <p>💰 {student.hourlyRate}€/h</p>
+                  <p>{student.email}</p>
+                  <p>{student.phone}</p>
+                  <p>Physique</p>
+                  <p>{student.hourlyRate}€/h</p>
                   <div className={`status ${student.active ? 'active' : 'inactive'}`}>
-                    {student.active ? '✅ Actif' : '❌ Inactif'}
+                    {student.active ? 'Actif' : 'Inactif'}
                   </div>
                 </div>
               ))}
@@ -414,7 +407,7 @@ const TeacherDashboard: React.FC = () => {
         {activeTab === 'sessions' && (
           <div className="sessions-tab">
             <div className="tab-header">
-              <h2>📅 Gestion des Séances</h2>
+              <h2>Gestion des Séances</h2>
               <button 
                 className="add-btn"
                 onClick={() => setShowAddSession(true)}
@@ -435,8 +428,8 @@ const TeacherDashboard: React.FC = () => {
                         onChange={(e) => setNewSession({...newSession, type: e.target.value as 'individual' | 'class', studentId: '', classId: ''})}
                         required
                       >
-                        <option value="individual">👤 Cours individuel</option>
-                        <option value="class">🏫 Cours en classe</option>
+                        <option value="individual">Cours individuel</option>
+                        <option value="class">Cours en classe</option>
                       </select>
                     </div>
 
@@ -513,8 +506,8 @@ const TeacherDashboard: React.FC = () => {
                   <div className="session-header">
                     <h3>
                       {session.type === 'class' && session.class ? 
-                        `👥 ${session.class.name}` : 
-                        `👤 ${session.student?.firstName} ${session.student?.lastName}`
+                        `${session.class.name}` : 
+                        `${session.student?.firstName} ${session.student?.lastName}`
                       }
                     </h3>
                     <span className="session-date">
@@ -522,10 +515,10 @@ const TeacherDashboard: React.FC = () => {
                     </span>
                   </div>
                   <div className="session-details">
-                    <p>📚 {session.subject} • ⏱️ {session.duration}min • 💰 {session.price}€</p>
-                    {session.notes && <p>📝 {session.notes}</p>}
+                    <p>{session.subject} • {session.duration}min • {session.price}€</p>
+                    {session.notes && <p>{session.notes}</p>}
                     {session.type === 'class' && session.class && (
-                      <p>👥 Élèves: {session.class.students.map(s => `${s.firstName} ${s.lastName}`).join(', ')}</p>
+                      <p>Élèves: {session.class.students.map(s => `${s.firstName} ${s.lastName}`).join(', ')}</p>
                     )}
                   </div>
                 </div>
@@ -537,7 +530,7 @@ const TeacherDashboard: React.FC = () => {
         {activeTab === 'classes' && (
           <div className="classes-tab">
             <div className="tab-header">
-              <h2>👥 Gestion des Groupes d'Élèves</h2>
+              <h2>Gestion des Groupes d'Élèves</h2>
               <button 
                 className="add-btn"
                 onClick={() => setShowAddClass(true)}
@@ -600,10 +593,10 @@ const TeacherDashboard: React.FC = () => {
             <div className="classes-grid">
               {classes.map(classItem => (
                 <div key={classItem.id} className="class-card">
-                  <h3>👥 {classItem.name}</h3>
+                  <h3>{classItem.name}</h3>
                   <p>� {classItem.students?.length || 0} élèves</p>
-                  <p>💰 {classItem.hourlyRate}€/heure</p>
-                  {classItem.description && <p>📝 {classItem.description}</p>}
+                  <p>{classItem.hourlyRate}€/heure</p>
+                  {classItem.description && <p>{classItem.description}</p>}
                   <div className="class-students">
                     <strong>Élèves:</strong>
                     <ul>
@@ -613,7 +606,7 @@ const TeacherDashboard: React.FC = () => {
                     </ul>
                   </div>
                   <div className={`status ${classItem.active ? 'active' : 'inactive'}`}>
-                    {classItem.active ? '✅ Actif' : '❌ Inactif'}
+                    {classItem.active ? 'Actif' : 'Inactif'}
                   </div>
                 </div>
               ))}
@@ -623,7 +616,7 @@ const TeacherDashboard: React.FC = () => {
 
         {activeTab === 'calendar' && (
           <div className="calendar-tab">
-            <h2>📅 Calendrier des Séances</h2>
+            <h2>Calendrier des Séances</h2>
             <div className="calendar-legend">
               <div className="legend-item">
                 <div className="legend-color legend-individual"></div>
@@ -657,7 +650,7 @@ const TeacherDashboard: React.FC = () => {
 
         {activeTab === 'payments' && (
           <div className="payments-tab">
-            <h2>💰 Gestion des Paiements</h2>
+            <h2>Gestion des Paiements</h2>
             
             <div className="payments-list">
               {payments.map(payment => (
@@ -665,14 +658,14 @@ const TeacherDashboard: React.FC = () => {
                   <div className="payment-header">
                     <h3>{payment.student?.firstName} {payment.student?.lastName}</h3>
                     <span className={`payment-status ${payment.status}`}>
-                      {payment.status === 'paid' ? '✅ Payé' : '⏳ En attente'}
+                      {payment.status === 'paid' ? 'Payé' : 'En attente'}
                     </span>
                   </div>
                   <div className="payment-details">
-                    <p>💰 Montant: {payment.amount}€</p>
-                    <p>📅 Échéance: {new Date(payment.dueDate).toLocaleDateString()}</p>
+                    <p>Montant: {payment.amount}€</p>
+                    <p>Échéance: {new Date(payment.dueDate).toLocaleDateString()}</p>
                     {payment.paidDate && (
-                      <p>✅ Payé le: {new Date(payment.paidDate).toLocaleDateString()}</p>
+                      <p>Payé le: {new Date(payment.paidDate).toLocaleDateString()}</p>
                     )}
                     {payment.status === 'pending' && (
                       <button 

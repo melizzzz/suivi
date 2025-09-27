@@ -1,0 +1,315 @@
+/* =========================================
+   VUE D'ENSEMBLE - LABORATOIRE PHYSIQUE
+   ========================================= */
+
+.physics-intro {
+  text-align: center;
+  margin-bottom: 40px;
+  padding: 32px;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), rgba(107, 70, 193, 0.05));
+  border-radius: var(--radius-molecule);
+  border: 1px solid rgba(59, 130, 246, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.physics-intro::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--gradient-aurora);
+  background-size: 300% 300%;
+  animation: magnetic-field 8s ease-in-out infinite;
+}
+
+.physics-intro h2 {
+  margin: 0 0 12px 0;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-proton);
+  text-shadow: 0 2px 4px rgba(59, 130, 246, 0.1);
+}
+
+.physics-intro p {
+  margin: 0;
+  font-size: 16px;
+  color: var(--text-electron);
+  opacity: 0.8;
+}
+
+/* Améliorations des cartes de statistiques */
+.stat-card .stat-label {
+  font-size: 12px;
+  color: var(--text-neutron);
+  margin-top: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 500;
+}
+
+/* Sections physiques */
+.physics-sections {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 32px;
+  margin-top: 40px;
+}
+
+@media (max-width: 1024px) {
+  .physics-sections {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================================
+   ACTIVITÉ RÉCENTE - STYLE LABORATOIRE
+   ========================================= */
+
+.recent-activity {
+  background: var(--bg-stellar-white);
+  padding: 32px;
+  border-radius: var(--radius-molecule);
+  box-shadow: var(--shadow-atom);
+  border: 1px solid rgba(59, 130, 246, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.recent-activity::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--accent-electric-blue), var(--accent-neutron-green));
+  background-size: 200% 200%;
+  animation: magnetic-field 6s ease-in-out infinite;
+}
+
+.recent-activity h2 {
+  margin: 0 0 24px 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-proton);
+  position: relative;
+}
+
+.activity-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.activity-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.02), rgba(107, 70, 193, 0.02));
+  border-radius: var(--radius-atom);
+  border: 1px solid rgba(59, 130, 246, 0.05);
+  transition: var(--transition-quantum);
+  position: relative;
+  overflow: hidden;
+}
+
+.activity-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: var(--gradient-quantum);
+  background-size: 100% 200%;
+  animation: wave-motion 3s infinite;
+}
+
+.activity-item:hover {
+  transform: translateX(8px);
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), rgba(107, 70, 193, 0.05));
+  border-color: rgba(59, 130, 246, 0.1);
+}
+
+.activity-icon {
+  font-size: 24px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--gradient-quantum);
+  border-radius: 50%;
+  animation: electron-orbit 4s linear infinite;
+}
+
+.activity-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.activity-title {
+  font-weight: 600;
+  color: var(--text-proton);
+  font-size: 14px;
+}
+
+.activity-subtitle {
+  font-size: 12px;
+  color: var(--text-electron);
+  opacity: 0.8;
+}
+
+.activity-date {
+  font-size: 12px;
+  color: var(--text-neutron);
+  font-weight: 500;
+  padding: 4px 8px;
+  background: rgba(59, 130, 246, 0.1);
+  border-radius: var(--radius-atom);
+}
+
+/* =========================================
+   FORMULES PHYSIQUES - SIDEBAR
+   ========================================= */
+
+.physics-formulas {
+  background: var(--bg-stellar-white);
+  padding: 32px;
+  border-radius: var(--radius-molecule);
+  box-shadow: var(--shadow-atom);
+  border: 1px solid rgba(59, 130, 246, 0.1);
+  position: relative;
+  overflow: hidden;
+  height: fit-content;
+}
+
+.physics-formulas::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--accent-plasma-orange), var(--accent-magnetic-red));
+  background-size: 200% 200%;
+  animation: magnetic-field 8s ease-in-out infinite;
+}
+
+.physics-formulas h2 {
+  margin: 0 0 24px 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-proton);
+}
+
+.formula-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.formula-card {
+  padding: 20px;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.03), rgba(107, 70, 193, 0.03));
+  border-radius: var(--radius-atom);
+  border: 1px solid rgba(59, 130, 246, 0.1);
+  text-align: center;
+  transition: var(--transition-quantum);
+  position: relative;
+  overflow: hidden;
+}
+
+.formula-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.1), transparent);
+  transition: var(--transition-particle);
+}
+
+.formula-card:hover::before {
+  left: 100%;
+}
+
+.formula-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-atom);
+  border-color: rgba(59, 130, 246, 0.2);
+}
+
+.formula {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--primary-quantum-blue);
+  margin-bottom: 8px;
+  font-family: 'Times New Roman', serif;
+  text-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+}
+
+.formula-desc {
+  font-size: 12px;
+  color: var(--text-electron);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 500;
+}
+
+/* Animation spéciale pour les formules */
+.formula-card:nth-child(1) .formula { 
+  animation: quantum-pulse 3s infinite; 
+}
+
+.formula-card:nth-child(2) .formula { 
+  animation: quantum-pulse 3s infinite 1s; 
+}
+
+.formula-card:nth-child(3) .formula { 
+  animation: quantum-pulse 3s infinite 2s; 
+}
+
+/* =========================================
+   RESPONSIVE DESIGN POUR VUE D'ENSEMBLE
+   ========================================= */
+
+@media (max-width: 768px) {
+  .physics-intro {
+    padding: 24px 20px;
+  }
+  
+  .physics-intro h2 {
+    font-size: 24px;
+  }
+  
+  .physics-sections {
+    gap: 24px;
+  }
+  
+  .recent-activity,
+  .physics-formulas {
+    padding: 24px;
+  }
+  
+  .activity-item {
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+  }
+  
+  .activity-content {
+    width: 100%;
+  }
+  
+  .formula {
+    font-size: 20px;
+  }
+}

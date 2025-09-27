@@ -1,66 +1,67 @@
 .teacher-dashboard {
   min-height: 100vh;
-  background-color: #f5f5f5;
+  background-color: #f8f6f3;
 }
 
 .dashboard-header {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: url('../assets/physics-banner.png') center center;
+  background-size: cover;
+  background-repeat: no-repeat;
   color: white;
   padding: 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+  min-height: 80px;
 }
 
-.header-left h1 {
-  margin: 0 0 5px 0;
-  font-size: 28px;
+.dashboard-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: inherit;
 }
 
-.header-left p {
-  margin: 0;
-  opacity: 0.9;
-}
-
-.logout-btn {
-  background: rgba(255, 255, 255, 0.2);
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-.logout-btn:hover {
-  background: rgba(255, 255, 255, 0.3);
-}
-
-.dashboard-nav {
-  background: white;
-  padding: 0 20px;
+.header-nav {
   display: flex;
-  border-bottom: 1px solid #ddd;
-  gap: 10px;
+  gap: 15px;
+  position: relative;
+  z-index: 3;
 }
 
-.nav-btn {
-  background: none;
-  border: none;
-  padding: 15px 20px;
+.nav-button {
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #333;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  padding: 10px 20px;
+  border-radius: 6px;
   cursor: pointer;
-  border-bottom: 3px solid transparent;
   transition: all 0.3s ease;
-  font-weight: 500;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 14px;
+  text-shadow: none;
 }
 
-.nav-btn:hover {
-  background-color: #f8f9fa;
+.nav-button:hover {
+  background-color: white;
+  color: #8d7b68;
+  border-color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.nav-btn.active {
-  border-bottom-color: #667eea;
-  color: #667eea;
+.nav-button.active {
+  background-color: #8d7b68;
+  color: white;
+  border-color: #8d7b68;
+  font-weight: 700;
 }
 
 .dashboard-content {
@@ -147,7 +148,7 @@
 }
 
 .add-btn {
-  background: #4CAF50;
+  background: #8d7b68;
   color: white;
   border: none;
   padding: 12px 20px;
@@ -158,7 +159,7 @@
 }
 
 .add-btn:hover {
-  background: #45a049;
+  background: #6b6258;
 }
 
 /* Modales */
@@ -238,13 +239,13 @@
 }
 
 .modal-buttons button[type="button"] {
-  background: #f44336;
+  background: #a69080;
   color: white;
   border: none;
 }
 
 .modal-buttons button[type="submit"] {
-  background: #4CAF50;
+  background: #8d7b68;
   color: white;
   border: none;
 }
@@ -283,13 +284,13 @@
 }
 
 .status.active {
-  background: #e8f5e8;
-  color: #4CAF50;
+  background: #e8e6e3;
+  color: #6b6258;
 }
 
 .status.inactive {
-  background: #ffeaea;
-  color: #f44336;
+  background: #f0ede8;
+  color: #a69080;
 }
 
 .sessions-list {
@@ -369,13 +370,13 @@
 }
 
 .payment-status.paid {
-  background: #e8f5e8;
-  color: #4CAF50;
+  background: #e8e6e3;
+  color: #6b6258;
 }
 
 .payment-status.pending {
-  background: #fff3e0;
-  color: #ff9800;
+  background: #f0ede8;
+  color: #8d7b68;
 }
 
 .payment-details p {
@@ -384,7 +385,7 @@
 }
 
 .mark-paid-btn {
-  background: #4CAF50;
+  background: #8d7b68;
   color: white;
   border: none;
   padding: 8px 16px;
@@ -395,7 +396,7 @@
 }
 
 .mark-paid-btn:hover {
-  background: #45a049;
+  background: #6b6258;
 }
 
 /* Responsive */
@@ -449,8 +450,8 @@
 
 .subject-display {
   padding: 15px;
-  background-color: #e8f5e8;
-  border: 2px solid #4caf50;
+  background-color: #e8e6e3;
+  border: 2px solid #8d7b68;
   border-radius: 8px;
   text-align: center;
   margin: 10px 0;
@@ -458,7 +459,7 @@
 
 .subject-display label {
   font-size: 16px;
-  color: #2e7d32;
+  color: #6b6258;
   margin: 0;
 }
 
@@ -537,7 +538,7 @@
 }
 
 .checkbox-label:hover {
-  background-color: #e3f2fd;
+  background-color: #f3f0ec;
 }
 
 .checkbox-label input[type="checkbox"] {
@@ -571,15 +572,15 @@
 }
 
 .legend-individual {
-  background-color: #2196f3;
+  background-color: #8d7b68;
 }
 
 .legend-class {
-  background-color: #4caf50;
+  background-color: #a69080;
 }
 
 .legend-scheduled {
-  background-color: #ff9800;
+  background-color: #c4b5a0;
 }
 
 /* Form improvements */

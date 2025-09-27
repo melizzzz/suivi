@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { studentsService, sessionsService, paymentsService } from '../services/api';
+import UserMenu from '../components/UserMenu';
 import './ParentDashboard.css';
 
 interface Student {
@@ -32,12 +33,13 @@ interface Payment {
 }
 
 const ParentDashboard: React.FC = () => {
-  const { user, logout } = useAuth();
+  // const { user, logout } = useAuth(); // Maintenant géré par UserMenu
   const [students, setStudents] = useState<Student[]>([]);
   const [sessions, setSessions] = useState<Session[]>([]);
   const [payments, setPayments] = useState<Payment[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedStudent, setSelectedStudent] = useState<Student | null>(null);
+  const [activeTab, setActiveTab] = useState<'overview' | 'sessions' | 'payments'>('overview');
 
   useEffect(() => {
     loadData();
@@ -91,12 +93,10 @@ const ParentDashboard: React.FC = () => {
       <div className="parent-dashboard">
         <header className="dashboard-header">
           <div className="header-left">
-            <h1>👨‍👩‍👧‍👦 Espace Parents</h1>
-            <p>Bienvenue {user?.name}</p>
+            <h1>Espace Parents</h1>
+            <p>Suivi des cours de vos enfants</p>
           </div>
-          <button onClick={logout} className="logout-btn">
-            🚪 Déconnexion
-          </button>
+          <UserMenu userType="parent" />
         </header>
         <div className="no-students">
           <h2>Aucun élève associé</h2>
@@ -114,14 +114,29 @@ const ParentDashboard: React.FC = () => {
 
   return (
     <div className="parent-dashboard">
-      <header className="dashboard-header">
-        <div className="header-left">
-          <h1>👨‍👩‍👧‍👦 Espace Parents</h1>
-          <p>Bienvenue {user?.name}</p>
-        </div>
-        <button onClick={logout} className="logout-btn">
-          🚪 Déconnexion
-        </button>
+            <header className="dashboard-header">        
+        <nav className="header-nav">
+          <button
+            className={`header-nav-btn ${activeTab === 'overview' ? 'active' : ''}`}
+            onClick={() => setActiveTab('overview')}
+          >
+            Vue d'ensemble
+          </button>
+          <button
+            className={`header-nav-btn ${activeTab === 'sessions' ? 'active' : ''}`}
+            onClick={() => setActiveTab('sessions')}
+          >
+            Séances
+          </button>
+          <button
+            className={`header-nav-btn ${activeTab === 'payments' ? 'active' : ''}`}
+            onClick={() => setActiveTab('payments')}
+          >
+            Paiements
+          </button>
+        </nav>
+        
+        <UserMenu />
       </header>
 
       {students.length > 1 && (
@@ -143,111 +158,126 @@ const ParentDashboard: React.FC = () => {
 
       {selectedStudent && (
         <main className="dashboard-content">
-          <div className="student-info">
-            <div className="student-card">
-              <h2>👤 {selectedStudent.firstName} {selectedStudent.lastName}</h2>
-              <div className="student-details">
-                <p>📧 {selectedStudent.email}</p>
-                <p>📚 Matière: Physique</p>
-                <p>💰 Tarif: {selectedStudent.hourlyRate}€/heure</p>
-              </div>
-            </div>
-
-            <div className="stats-row">
-              <div className="stat-card">
-                <h3>📅 Séances suivies</h3>
-                <div className="stat-number">{totalSessions}</div>
-              </div>
-              <div className="stat-card">
-                <h3>💰 Total dépensé</h3>
-                <div className="stat-number">{totalSpent}€</div>
-              </div>
-              <div className="stat-card">
-                <h3>⏳ Montant dû</h3>
-                <div className="stat-number">{pendingAmount}€</div>
-              </div>
-            </div>
+          <div className="student-header-simple">
+            <h2>{selectedStudent.firstName} {selectedStudent.lastName}</h2>
           </div>
 
-          <div className="dashboard-sections">
-            <section className="sessions-section">
-              <h3>📚 Historique des séances</h3>
-              {sessions.length === 0 ? (
-                <p className="empty-state">Aucune séance enregistrée pour le moment.</p>
-              ) : (
-                <div className="sessions-list">
-                  {sessions
-                    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-                    .map(session => (
-                    <div key={session.id} className="session-card">
-                      <div className="session-header">
-                        <div className="session-subject">{session.subject}</div>
-                        <div className="session-date">
-                          {new Date(session.date).toLocaleDateString('fr-FR', {
-                            weekday: 'long',
-                            year: 'numeric',
-                            month: 'long',
-                            day: 'numeric'
-                          })}
-                        </div>
-                      </div>
-                      <div className="session-details">
-                        <span className="session-duration">⏱️ {session.duration} minutes</span>
-                        <span className="session-price">💰 {session.price}€</span>
-                        <span className={`session-status ${session.status}`}>
-                          {session.status === 'completed' ? '✅ Terminée' : '📅 Prévue'}
-                        </span>
-                      </div>
-                      {session.notes && (
-                        <div className="session-notes">
-                          <strong>📝 Notes du professeur:</strong>
-                          <p>{session.notes}</p>
-                        </div>
-                      )}
+          {activeTab === 'overview' && (
+            <div className="overview-tab">
+              <div className="stats-row">
+                <div className="stat-card">
+                  <h3>Séances suivies</h3>
+                  <div className="stat-number">{totalSessions}</div>
+                </div>
+                <div className="stat-card">
+                  <h3>Total dépensé</h3>
+                  <div className="stat-number">{totalSpent}€</div>
+                </div>
+                <div className="stat-card">
+                  <h3>Montant dû</h3>
+                  <div className="stat-number">{pendingAmount}€</div>
+                </div>
+              </div>
+
+              <div className="recent-activity">
+                <h2>Activité récente</h2>
+                <div className="activity-list">
+                  {sessions.slice(-3).reverse().map(session => (
+                    <div key={session.id} className="activity-item">
+                      <span>Séance de {session.subject}</span>
+                      <span className="activity-date">{new Date(session.date).toLocaleDateString()}</span>
                     </div>
                   ))}
                 </div>
-              )}
-            </section>
+              </div>
+            </div>
+          )}
 
-            <section className="payments-section">
-              <h3>💳 Paiements et factures</h3>
-              {payments.length === 0 ? (
-                <p className="empty-state">Aucune facture pour le moment.</p>
-              ) : (
-                <div className="payments-list">
-                  {payments
-                    .sort((a, b) => new Date(b.dueDate).getTime() - new Date(a.dueDate).getTime())
-                    .map(payment => (
-                    <div key={payment.id} className={`payment-card ${payment.status}`}>
-                      <div className="payment-header">
-                        <div className="payment-amount">💰 {payment.amount}€</div>
-                        <div className={`payment-status ${payment.status}`}>
-                          {payment.status === 'paid' ? '✅ Payé' : '⏳ En attente'}
+          {activeTab === 'sessions' && (
+            <div className="sessions-tab">
+              <section className="sessions-section">
+                <h3>Historique des séances</h3>
+                {sessions.length === 0 ? (
+                  <p className="empty-state">Aucune séance enregistrée pour le moment.</p>
+                ) : (
+                  <div className="sessions-list">
+                    {sessions
+                      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+                      .map(session => (
+                      <div key={session.id} className="session-card">
+                        <div className="session-header">
+                          <div className="session-subject">{session.subject}</div>
+                          <div className="session-date">
+                            {new Date(session.date).toLocaleDateString('fr-FR', {
+                              weekday: 'long',
+                              year: 'numeric',
+                              month: 'long',
+                              day: 'numeric'
+                            })}
+                          </div>
                         </div>
-                      </div>
-                      <div className="payment-details">
-                        <p>📅 Échéance: {new Date(payment.dueDate).toLocaleDateString('fr-FR')}</p>
-                        {payment.paidDate && (
-                          <p>✅ Payé le: {new Date(payment.paidDate).toLocaleDateString('fr-FR')}</p>
-                        )}
-                        {payment.paymentMethod && (
-                          <p>💳 Mode: {payment.paymentMethod}</p>
-                        )}
-                      </div>
-                      {payment.status === 'pending' && (
-                        <div className="payment-actions">
-                          <p className="payment-reminder">
-                            💡 Contactez votre professeur pour effectuer le paiement
-                          </p>
+                        <div className="session-details">
+                          <span className="session-duration">{session.duration} minutes</span>
+                          <span className="session-price">{session.price}€</span>
+                          <span className={`session-status ${session.status}`}>
+                            {session.status === 'completed' ? 'Terminée' : 'Prévue'}
+                          </span>
                         </div>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              )}
-            </section>
-          </div>
+                        {session.notes && (
+                          <div className="session-notes">
+                            <strong>Notes du professeur:</strong>
+                            <p>{session.notes}</p>
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </section>
+            </div>
+          )}
+
+          {activeTab === 'payments' && (
+            <div className="payments-tab">
+              <section className="payments-section">
+                <h3>Paiements et factures</h3>
+                {payments.length === 0 ? (
+                  <p className="empty-state">Aucune facture pour le moment.</p>
+                ) : (
+                  <div className="payments-list">
+                    {payments
+                      .sort((a, b) => new Date(b.dueDate).getTime() - new Date(a.dueDate).getTime())
+                      .map(payment => (
+                      <div key={payment.id} className={`payment-card ${payment.status}`}>
+                        <div className="payment-header">
+                          <div className="payment-amount">{payment.amount}€</div>
+                          <div className={`payment-status ${payment.status}`}>
+                            {payment.status === 'paid' ? 'Payé' : 'En attente'}
+                          </div>
+                        </div>
+                        <div className="payment-details">
+                          <p>Échéance: {new Date(payment.dueDate).toLocaleDateString('fr-FR')}</p>
+                          {payment.paidDate && (
+                            <p>Payé le: {new Date(payment.paidDate).toLocaleDateString('fr-FR')}</p>
+                          )}
+                          {payment.paymentMethod && (
+                            <p>Mode: {payment.paymentMethod}</p>
+                          )}
+                        </div>
+                        {payment.status === 'pending' && (
+                          <div className="payment-actions">
+                            <p className="payment-reminder">
+                              Contactez votre professeur pour effectuer le paiement
+                            </p>
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </section>
+            </div>
+          )}
         </main>
       )}
     </div>

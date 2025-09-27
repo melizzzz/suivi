@@ -1,0 +1,423 @@
+/* =========================================
+   PHYSIQUE COMPACT - DESIGN MOBILE-FIRST
+   Interface compacte et efficace
+   ========================================= */
+
+:root {
+  /* Couleurs simplifiées */
+  --primary: #6366f1;
+  --primary-light: #a5b4fc;
+  --secondary: #64748b;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+  
+  /* Couleurs de fond */
+  --bg-main: #f8fafc;
+  --bg-card: #ffffff;
+  --bg-gray: #f1f5f9;
+  
+  /* Couleurs de texte */
+  --text-primary: #1e293b;
+  --text-secondary: #64748b;
+  --text-muted: #94a3b8;
+  
+  /* Bordures */
+  --border: #e2e8f0;
+  
+  /* Ombres légères */
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  
+  /* Rayons */
+  --radius: 8px;
+  --radius-lg: 12px;
+  
+  /* Espacement compact */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  
+  /* Transitions rapides */
+  --transition: all 0.2s ease;
+}
+
+/* Reset basique */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-main);
+  color: var(--text-primary);
+  line-height: 1.5;
+}
+
+/* =========================================
+   LAYOUT COMPACT
+   ========================================= */
+
+.compact-app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header compact */
+.compact-header {
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border);
+  padding: var(--space-4);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: var(--shadow);
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.header-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.header-subtitle {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  display: none;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+/* Navigation horizontale compacte */
+.compact-nav {
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border);
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.compact-nav::-webkit-scrollbar {
+  display: none;
+}
+
+.nav-tabs {
+  display: flex;
+  padding: 0 var(--space-4);
+  min-width: max-content;
+}
+
+.nav-tab {
+  padding: var(--space-3) var(--space-4);
+  border: none;
+  background: none;
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: var(--transition);
+  white-space: nowrap;
+}
+
+.nav-tab:hover {
+  color: var(--text-primary);
+}
+
+.nav-tab.active {
+  color: var(--primary);
+  border-bottom-color: var(--primary);
+}
+
+/* Contenu principal */
+.compact-content {
+  flex: 1;
+  padding: var(--space-4);
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* =========================================
+   CARTES COMPACTES
+   ========================================= */
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
+}
+
+.stat-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--space-4);
+  text-align: center;
+  transition: var(--transition);
+}
+
+.stat-card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.stat-icon {
+  font-size: 1.5rem;
+  margin-bottom: var(--space-2);
+  display: block;
+}
+
+.stat-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: var(--space-1);
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* =========================================
+   COMPOSANTS COMPACTS
+   ========================================= */
+
+.compact-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-bottom: var(--space-4);
+}
+
+.card-header {
+  padding: var(--space-4);
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-gray);
+}
+
+.card-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.card-body {
+  padding: var(--space-4);
+}
+
+/* Boutons compacts */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-card);
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn:hover {
+  box-shadow: var(--shadow);
+}
+
+.btn-primary {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
+}
+
+.btn-small {
+  padding: var(--space-1) var(--space-3);
+  font-size: 0.75rem;
+}
+
+/* Liste compacte */
+.compact-list {
+  list-style: none;
+}
+
+.list-item {
+  display: flex;
+  align-items: center;
+  padding: var(--space-3);
+  border-bottom: 1px solid var(--border);
+}
+
+.list-item:last-child {
+  border-bottom: none;
+}
+
+.list-icon {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-gray);
+  border-radius: var(--radius);
+  margin-right: var(--space-3);
+  font-size: 1rem;
+}
+
+.list-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.list-title {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: var(--space-1);
+}
+
+.list-subtitle {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.list-meta {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* =========================================
+   NAVIGATION MOBILE
+   ========================================= */
+
+@media (max-width: 768px) {
+  .compact-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-top: 1px solid var(--border);
+    border-bottom: none;
+    z-index: 100;
+    background: var(--bg-card);
+  }
+  
+  .nav-tabs {
+    justify-content: space-around;
+    padding: var(--space-2);
+  }
+  
+  .nav-tab {
+    flex-direction: column;
+    padding: var(--space-2);
+    font-size: 0.75rem;
+    border-bottom: none;
+    position: relative;
+  }
+  
+  .nav-tab.active::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 4px;
+    background: var(--primary);
+    border-radius: 50%;
+  }
+  
+  .compact-content {
+    padding-bottom: 80px;
+  }
+  
+  .header-subtitle {
+    display: block;
+  }
+  
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-2);
+  }
+  
+  .stat-card {
+    padding: var(--space-3);
+  }
+  
+  .stat-value {
+    font-size: 1.25rem;
+  }
+  
+  .stat-icon {
+    font-size: 1.25rem;
+    margin-bottom: var(--space-1);
+  }
+}
+
+/* =========================================
+   UTILITAIRES
+   ========================================= */
+
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+.text-sm { font-size: 0.875rem; }
+.text-xs { font-size: 0.75rem; }
+.font-medium { font-weight: 500; }
+.font-semibold { font-weight: 600; }
+.mb-2 { margin-bottom: var(--space-2); }
+.mb-4 { margin-bottom: var(--space-4); }
+.mt-4 { margin-top: var(--space-4); }
+.flex { display: flex; }
+.items-center { align-items: center; }
+.justify-between { justify-content: space-between; }
+.gap-2 { gap: var(--space-2); }
+.gap-4 { gap: var(--space-4); }
+
+/* Grid simple */
+.grid {
+  display: grid;
+}
+
+.grid-cols-1 { grid-template-columns: 1fr; }
+.grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
+
+@media (min-width: 768px) {
+  .md\\:grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
+  .md\\:grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
+}
+
+.gap-3 { gap: var(--space-3); }
+.gap-4 { gap: var(--space-4); }

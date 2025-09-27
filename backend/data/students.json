@@ -12,18 +12,5 @@
     "parentId": "2",
     "createdAt": "2025-09-17T22:34:55.829Z",
     "active": true
-  },
-  {
-    "firstName": "test",
-    "lastName": "test",
-    "email": "test@gmail.com",
-    "phone": "test",
-    "subjects": [
-      "Physique"
-    ],
-    "hourlyRate": 2000,
-    "active": true,
-    "id": "1758184148201as378ker4",
-    "createdAt": "2025-09-18T08:29:08.201Z"
   }
 ]

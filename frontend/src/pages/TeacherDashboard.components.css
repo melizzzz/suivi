@@ -1,0 +1,465 @@
+/* =========================================
+   SECTIONS ET TABLEAUX - STYLE PHYSIQUE
+   ========================================= */
+
+/* Tables modernes avec effet de matière */
+.students-table, .sessions-table, .payments-table, .classes-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: var(--bg-stellar-white);
+  border-radius: var(--radius-molecule);
+  overflow: hidden;
+  box-shadow: var(--shadow-atom);
+  margin-top: 24px;
+  border: 1px solid rgba(59, 130, 246, 0.1);
+}
+
+.students-table thead th,
+.sessions-table thead th,
+.payments-table thead th,
+.classes-table thead th {
+  background: var(--gradient-quantum);
+  background-size: 200% 200%;
+  animation: magnetic-field 6s ease-in-out infinite;
+  color: white;
+  padding: 20px 16px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  border: none;
+  position: relative;
+}
+
+.students-table thead th::after,
+.sessions-table thead th::after,
+.payments-table thead th::after,
+.classes-table thead th::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+  animation: wave-motion 2s infinite;
+}
+
+.students-table tbody tr,
+.sessions-table tbody tr,
+.payments-table tbody tr,
+.classes-table tbody tr {
+  transition: var(--transition-quantum);
+  border-bottom: 1px solid rgba(59, 130, 246, 0.05);
+}
+
+.students-table tbody tr:hover,
+.sessions-table tbody tr:hover,
+.payments-table tbody tr:hover,
+.classes-table tbody tr:hover {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.02), rgba(107, 70, 193, 0.02));
+  transform: translateX(4px);
+  box-shadow: inset 4px 0 0 var(--primary-quantum-blue);
+}
+
+.students-table td,
+.sessions-table td,
+.payments-table td,
+.classes-table td {
+  padding: 16px;
+  color: var(--text-proton);
+  font-size: 14px;
+  border: none;
+  vertical-align: middle;
+}
+
+/* =========================================
+   BOUTONS - DESIGN ÉNERGÉTIQUE
+   ========================================= */
+
+.btn {
+  padding: 12px 24px;
+  border: none;
+  border-radius: var(--radius-atom);
+  cursor: pointer;
+  transition: var(--transition-quantum);
+  font-weight: 600;
+  font-size: 14px;
+  position: relative;
+  overflow: hidden;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: var(--transition-particle);
+}
+
+.btn:hover::before {
+  left: 100%;
+}
+
+.btn-primary {
+  background: var(--gradient-quantum);
+  background-size: 200% 200%;
+  animation: magnetic-field 4s ease-in-out infinite;
+  color: white;
+  box-shadow: var(--shadow-atom);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-molecule);
+}
+
+.btn-secondary {
+  background: linear-gradient(135deg, var(--text-neutron), var(--text-photon));
+  color: white;
+  box-shadow: var(--shadow-particle);
+}
+
+.btn-secondary:hover {
+  background: linear-gradient(135deg, var(--text-electron), var(--text-neutron));
+  transform: translateY(-1px);
+}
+
+.btn-danger {
+  background: linear-gradient(135deg, var(--accent-magnetic-red), #dc2626);
+  color: white;
+  box-shadow: 0 4px 20px rgba(239, 68, 68, 0.2);
+}
+
+.btn-danger:hover {
+  background: linear-gradient(135deg, #dc2626, #b91c1c);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(239, 68, 68, 0.3);
+}
+
+.btn-success {
+  background: linear-gradient(135deg, var(--accent-neutron-green), #059669);
+  color: white;
+  box-shadow: 0 4px 20px rgba(16, 185, 129, 0.2);
+}
+
+.btn-success:hover {
+  background: linear-gradient(135deg, #059669, #047857);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(16, 185, 129, 0.3);
+}
+
+/* Boutons d'action avec icônes */
+.action-btn {
+  padding: 8px 12px;
+  margin: 0 4px;
+  border-radius: var(--radius-atom);
+  border: none;
+  cursor: pointer;
+  transition: var(--transition-quantum);
+  position: relative;
+  overflow: hidden;
+}
+
+.action-btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255,255,255,0.3);
+  border-radius: 50%;
+  transition: var(--transition-particle);
+  transform: translate(-50%, -50%);
+}
+
+.action-btn:hover::before {
+  width: 100px;
+  height: 100px;
+}
+
+.edit-btn {
+  background: linear-gradient(135deg, var(--accent-electric-blue), #2563eb);
+  color: white;
+}
+
+.delete-btn {
+  background: linear-gradient(135deg, var(--accent-magnetic-red), #dc2626);
+  color: white;
+}
+
+.view-btn {
+  background: linear-gradient(135deg, var(--accent-neutron-green), #059669);
+  color: white;
+}
+
+/* =========================================
+   FORMULAIRES - INTERFACE MOLÉCULAIRE
+   ========================================= */
+
+.form-container {
+  background: var(--bg-stellar-white);
+  padding: 32px;
+  border-radius: var(--radius-molecule);
+  box-shadow: var(--shadow-atom);
+  border: 1px solid rgba(59, 130, 246, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.form-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--gradient-aurora);
+  background-size: 300% 300%;
+  animation: magnetic-field 6s ease-in-out infinite;
+}
+
+.form-group {
+  margin-bottom: 24px;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--text-proton);
+  font-weight: 600;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.form-input,
+.form-select,
+.form-textarea {
+  width: 100%;
+  padding: 16px;
+  border: 2px solid rgba(59, 130, 246, 0.1);
+  border-radius: var(--radius-atom);
+  font-size: 16px;
+  color: var(--text-proton);
+  background: var(--bg-stellar-white);
+  transition: var(--transition-quantum);
+  box-sizing: border-box;
+}
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+  outline: none;
+  border-color: var(--primary-quantum-blue);
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.02), rgba(107, 70, 193, 0.02));
+}
+
+/* =========================================
+   MODAL - EFFET QUANTIQUE
+   ========================================= */
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(15, 23, 42, 0.8);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: aurora-dance 0.3s ease-out;
+}
+
+.modal-content {
+  background: var(--bg-stellar-white);
+  border-radius: var(--radius-molecule);
+  box-shadow: var(--shadow-molecule);
+  max-width: 90vw;
+  max-height: 90vh;
+  overflow: auto;
+  position: relative;
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  animation: quantum-pulse 0.5s ease-out;
+}
+
+.modal-header {
+  background: var(--gradient-quantum);
+  background-size: 200% 200%;
+  animation: magnetic-field 4s ease-in-out infinite;
+  color: white;
+  padding: 24px 32px;
+  border-radius: var(--radius-molecule) var(--radius-molecule) 0 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.modal-header::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+  animation: wave-motion 3s infinite;
+}
+
+.modal-title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+  position: relative;
+  z-index: 1;
+}
+
+.modal-body {
+  padding: 32px;
+}
+
+.modal-footer {
+  padding: 24px 32px;
+  border-top: 1px solid rgba(59, 130, 246, 0.1);
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+}
+
+/* =========================================
+   STATUTS ET BADGES - PARTICULES COLORÉES
+   ========================================= */
+
+.status-badge {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: var(--radius-planet);
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  position: relative;
+  overflow: hidden;
+}
+
+.status-badge::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: inherit;
+  opacity: 0.1;
+  animation: quantum-pulse 2s infinite;
+}
+
+.status-paid {
+  background: linear-gradient(135deg, var(--accent-neutron-green), #059669);
+  color: white;
+  box-shadow: 0 2px 10px rgba(16, 185, 129, 0.3);
+}
+
+.status-pending {
+  background: linear-gradient(135deg, var(--accent-plasma-orange), #ea580c);
+  color: white;
+  box-shadow: 0 2px 10px rgba(249, 115, 22, 0.3);
+}
+
+.status-overdue {
+  background: linear-gradient(135deg, var(--accent-magnetic-red), #dc2626);
+  color: white;
+  box-shadow: 0 2px 10px rgba(239, 68, 68, 0.3);
+}
+
+.status-active {
+  background: linear-gradient(135deg, var(--accent-electric-blue), #2563eb);
+  color: white;
+  box-shadow: 0 2px 10px rgba(59, 130, 246, 0.3);
+}
+
+.status-inactive {
+  background: linear-gradient(135deg, var(--text-neutron), var(--text-photon));
+  color: white;
+  box-shadow: 0 2px 10px rgba(107, 114, 128, 0.3);
+}
+
+/* =========================================
+   INDICATEURS DE CHARGEMENT - ORBITES
+   ========================================= */
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(59, 130, 246, 0.1);
+  border-left: 4px solid var(--primary-quantum-blue);
+  border-radius: 50%;
+  animation: electron-orbit 1s linear infinite;
+  margin: 20px auto;
+}
+
+.loading-text {
+  text-align: center;
+  color: var(--text-electron);
+  margin-top: 16px;
+  font-weight: 500;
+}
+
+/* =========================================
+   ALERTES ET NOTIFICATIONS - RAYONNEMENT
+   ========================================= */
+
+.alert {
+  padding: 16px 20px;
+  border-radius: var(--radius-atom);
+  margin-bottom: 20px;
+  border: 1px solid;
+  position: relative;
+  overflow: hidden;
+}
+
+.alert::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  animation: wave-motion 2s infinite;
+}
+
+.alert-success {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(5, 150, 105, 0.1));
+  border-color: var(--accent-neutron-green);
+  color: #047857;
+}
+
+.alert-error {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(220, 38, 38, 0.1));
+  border-color: var(--accent-magnetic-red);
+  color: #b91c1c;
+}
+
+.alert-warning {
+  background: linear-gradient(135deg, rgba(249, 115, 22, 0.1), rgba(234, 88, 12, 0.1));
+  border-color: var(--accent-plasma-orange);
+  color: #c2410c;
+}
+
+.alert-info {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(37, 99, 235, 0.1));
+  border-color: var(--accent-electric-blue);
+  color: #1d4ed8;
+}

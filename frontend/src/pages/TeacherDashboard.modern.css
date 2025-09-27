@@ -1,0 +1,382 @@
+/* =========================================
+   DESIGN SYSTEM - PHYSIQUE MODERNE
+   ========================================= */
+
+:root {
+  /* Couleurs principales - Physique quantique */
+  --primary-quantum-blue: #0066ff;
+  --primary-quantum-purple: #6b46c1;
+  --primary-quantum-teal: #0891b2;
+  
+  /* Couleurs d'accentuation - Électromagnétisme */
+  --accent-electric-blue: #3b82f6;
+  --accent-magnetic-red: #ef4444;
+  --accent-plasma-orange: #f97316;
+  --accent-neutron-green: #10b981;
+  
+  /* Couleurs de fond - Espace et matière */
+  --bg-cosmic-dark: #0f172a;
+  --bg-cosmic-medium: #1e293b;
+  --bg-nebula-light: #f8fafc;
+  --bg-stellar-white: #ffffff;
+  
+  /* Couleurs neutres - Particules */
+  --text-proton: #1f2937;
+  --text-electron: #4b5563;
+  --text-neutron: #6b7280;
+  --text-photon: #9ca3af;
+  
+  /* Gradients physiques */
+  --gradient-wave: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --gradient-quantum: linear-gradient(45deg, #0066ff, #6b46c1, #0891b2);
+  --gradient-electromagnetic: linear-gradient(90deg, #3b82f6, #ef4444);
+  --gradient-cosmic: linear-gradient(180deg, #0f172a, #1e293b);
+  --gradient-aurora: linear-gradient(45deg, #10b981, #3b82f6, #6b46c1);
+  
+  /* Ombres - Effets quantiques */
+  --shadow-atom: 0 4px 20px rgba(59, 130, 246, 0.15);
+  --shadow-molecule: 0 8px 30px rgba(107, 70, 193, 0.2);
+  --shadow-particle: 0 2px 10px rgba(0, 0, 0, 0.1);
+  --shadow-energy: 0 0 20px rgba(59, 130, 246, 0.3);
+  
+  /* Rayons de courbure - Géométrie */
+  --radius-atom: 8px;
+  --radius-molecule: 16px;
+  --radius-planet: 24px;
+  
+  /* Transitions - Mouvement physique */
+  --transition-quantum: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-wave: all 0.6s ease-in-out;
+  --transition-particle: all 0.2s ease-out;
+}
+
+/* =========================================
+   ANIMATIONS PHYSIQUES
+   ========================================= */
+
+@keyframes quantum-pulse {
+  0%, 100% { 
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7);
+  }
+  50% { 
+    transform: scale(1.05);
+    box-shadow: 0 0 0 10px rgba(59, 130, 246, 0);
+  }
+}
+
+@keyframes wave-motion {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+@keyframes electron-orbit {
+  0% { transform: rotate(0deg) translateX(30px) rotate(0deg); }
+  100% { transform: rotate(360deg) translateX(30px) rotate(-360deg); }
+}
+
+@keyframes magnetic-field {
+  0%, 100% { 
+    background-position: 0% 50%; 
+  }
+  50% { 
+    background-position: 100% 50%; 
+  }
+}
+
+@keyframes aurora-dance {
+  0%, 100% { opacity: 1; transform: translateY(0); }
+  33% { opacity: 0.7; transform: translateY(-5px); }
+  66% { opacity: 0.9; transform: translateY(5px); }
+}
+
+/* =========================================
+   DASHBOARD PRINCIPAL - DESIGN PHYSIQUE
+   ========================================= */
+
+.teacher-dashboard {
+  min-height: 100vh;
+  background: var(--bg-nebula-light);
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Effet de particules en arrière-plan */
+.teacher-dashboard::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(107, 70, 193, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(16, 185, 129, 0.05) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.dashboard-header {
+  background: var(--gradient-quantum);
+  background-size: 400% 400%;
+  animation: magnetic-field 8s ease-in-out infinite;
+  color: white;
+  padding: 24px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: var(--shadow-molecule);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Effet d'ondes en arrière-plan du header */
+.dashboard-header::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+  animation: wave-motion 3s infinite;
+}
+
+.header-left h1 {
+  margin: 0 0 8px 0;
+  font-size: 32px;
+  font-weight: 700;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  position: relative;
+  z-index: 1;
+}
+
+.header-left h1::after {
+  content: '⚛️';
+  margin-left: 12px;
+  animation: electron-orbit 4s linear infinite;
+  display: inline-block;
+}
+
+.header-left p {
+  margin: 0;
+  opacity: 0.9;
+  font-size: 16px;
+  position: relative;
+  z-index: 1;
+}
+
+.logout-btn {
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  padding: 12px 24px;
+  border-radius: var(--radius-molecule);
+  cursor: pointer;
+  transition: var(--transition-quantum);
+  font-weight: 600;
+  backdrop-filter: blur(10px);
+  position: relative;
+  z-index: 1;
+}
+
+.logout-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-energy);
+}
+
+/* =========================================
+   NAVIGATION - STYLE QUANTIQUE
+   ========================================= */
+
+.dashboard-nav {
+  background: var(--bg-stellar-white);
+  padding: 0 32px;
+  display: flex;
+  border-bottom: 1px solid rgba(59, 130, 246, 0.1);
+  gap: 8px;
+  box-shadow: var(--shadow-particle);
+  position: relative;
+}
+
+.nav-btn {
+  background: none;
+  border: none;
+  padding: 18px 24px;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  transition: var(--transition-quantum);
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--text-electron);
+  position: relative;
+  overflow: hidden;
+}
+
+.nav-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.1), transparent);
+  transition: var(--transition-particle);
+}
+
+.nav-btn:hover::before {
+  left: 100%;
+}
+
+.nav-btn:hover {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), rgba(107, 70, 193, 0.05));
+  color: var(--primary-quantum-blue);
+  transform: translateY(-1px);
+}
+
+.nav-btn.active {
+  border-bottom-color: var(--primary-quantum-blue);
+  color: var(--primary-quantum-blue);
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(107, 70, 193, 0.1));
+}
+
+.nav-btn.active::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 6px;
+  height: 6px;
+  background: var(--primary-quantum-blue);
+  border-radius: 50%;
+  animation: quantum-pulse 2s infinite;
+}
+
+/* =========================================
+   CONTENU PRINCIPAL
+   ========================================= */
+
+.dashboard-content {
+  padding: 32px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.loading {
+  text-align: center;
+  padding: 80px;
+  font-size: 18px;
+  color: var(--text-electron);
+}
+
+.loading::before {
+  content: '⚛️';
+  display: block;
+  font-size: 48px;
+  margin-bottom: 16px;
+  animation: electron-orbit 2s linear infinite;
+}
+
+/* =========================================
+   GRILLE DE STATISTIQUES - DESIGN ATOMIQUE
+   ========================================= */
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+.stat-card {
+  background: var(--bg-stellar-white);
+  padding: 32px 24px;
+  border-radius: var(--radius-molecule);
+  box-shadow: var(--shadow-atom);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  transition: var(--transition-quantum);
+  border: 1px solid rgba(59, 130, 246, 0.1);
+}
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--gradient-quantum);
+  background-size: 200% 200%;
+  animation: magnetic-field 4s ease-in-out infinite;
+}
+
+.stat-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-molecule);
+  border-color: rgba(59, 130, 246, 0.2);
+}
+
+.stat-card:nth-child(1) { animation: aurora-dance 3s infinite; }
+.stat-card:nth-child(2) { animation: aurora-dance 3s infinite 0.5s; }
+.stat-card:nth-child(3) { animation: aurora-dance 3s infinite 1s; }
+.stat-card:nth-child(4) { animation: aurora-dance 3s infinite 1.5s; }
+
+.stat-card h3 {
+  margin: 0 0 16px 0;
+  color: var(--text-electron);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.stat-number {
+  font-size: 48px;
+  font-weight: 800;
+  margin: 0;
+  background: var(--gradient-quantum);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200% 200%;
+  animation: magnetic-field 3s ease-in-out infinite;
+}
+
+/* Icônes spéciales pour chaque statistique */
+.stat-card:nth-child(1) h3::before { content: '👨‍🎓 '; }
+.stat-card:nth-child(2) h3::before { content: '📚 '; }
+.stat-card:nth-child(3) h3::before { content: '💰 '; }
+.stat-card:nth-child(4) h3::before { content: '⚡ '; }
+
+/* =========================================
+   RESPONSIVE DESIGN
+   ========================================= */
+
+@media (max-width: 768px) {
+  .dashboard-header {
+    padding: 20px;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .dashboard-nav {
+    padding: 0 20px;
+    flex-wrap: wrap;
+  }
+  
+  .dashboard-content {
+    padding: 20px;
+  }
+  
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
