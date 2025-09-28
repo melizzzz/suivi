@@ -894,3 +894,136 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* Styles pour la sélection d'élèves dans les groupes */
+.students-selection {
+  margin: 20px 0;
+}
+
+.students-selection h4 {
+  color: #4A655A;
+  margin-bottom: 15px;
+  border-bottom: 2px solid #4A655A;
+  padding-bottom: 8px;
+}
+
+.students-filters {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 15px;
+  flex-wrap: wrap;
+}
+
+.search-input {
+  flex: 2;
+  padding: 10px 15px;
+  border: 2px solid #e0ddd8;
+  border-radius: 8px;
+  font-size: 14px;
+  background: #f8f6f3;
+  transition: border-color 0.3s ease;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #4A655A;
+  background: white;
+}
+
+.level-filter {
+  flex: 1;
+  min-width: 150px;
+  padding: 10px 15px;
+  border: 2px solid #e0ddd8;
+  border-radius: 8px;
+  font-size: 14px;
+  background: #f8f6f3;
+  transition: border-color 0.3s ease;
+}
+
+.level-filter:focus {
+  outline: none;
+  border-color: #4A655A;
+  background: white;
+}
+
+.students-checkboxes {
+  max-height: 300px;
+  overflow-y: auto;
+  border: 1px solid #e0ddd8;
+  border-radius: 8px;
+  padding: 15px;
+  background: #f8f6f3;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  padding: 8px 10px;
+  margin: 5px 0;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.checkbox-label:hover {
+  background-color: rgba(74, 101, 90, 0.1);
+}
+
+.checkbox-label input[type="checkbox"] {
+  margin-right: 12px;
+  transform: scale(1.2);
+  accent-color: #4A655A;
+}
+
+.student-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.student-level {
+  font-size: 12px;
+  color: #8d7b68;
+  font-weight: 600;
+  background: #e0ddd8;
+  padding: 2px 8px;
+  border-radius: 12px;
+  margin-left: 10px;
+}
+
+.no-students {
+  text-align: center;
+  color: #8d7b68;
+  font-style: italic;
+  padding: 20px;
+  margin: 0;
+}
+
+.students-count {
+  font-size: 14px;
+  color: #8d7b68;
+  margin-bottom: 10px;
+  padding: 8px 12px;
+  background: rgba(74, 101, 90, 0.1);
+  border-radius: 6px;
+  border-left: 3px solid #4A655A;
+}
+
+.selected-count {
+  font-weight: 600;
+  color: #4A655A;
+}
+
+@media (max-width: 768px) {
+  .students-filters {
+    flex-direction: column;
+  }
+  
+  .search-input,
+  .level-filter {
+    flex: none;
+    width: 100%;
+  }
+}

@@ -8,6 +8,7 @@ interface Student {
   email: string;
   phone: string;
   hourlyRate: number;
+  level: string;
   active: boolean;
 }
 
@@ -21,10 +22,10 @@ const StudentsManagement: React.FC<StudentsManagementProps> = ({ students, setSt
   const [showEditStudent, setShowEditStudent] = useState(false);
   const [editingStudent, setEditingStudent] = useState<Student | null>(null);
   const [newStudent, setNewStudent] = useState({
-    firstName: '', lastName: '', email: '', phone: '', hourlyRate: ''
+    firstName: '', lastName: '', email: '', phone: '', hourlyRate: '', level: ''
   });
   const [editStudent, setEditStudent] = useState({
-    firstName: '', lastName: '', email: '', phone: '', hourlyRate: ''
+    firstName: '', lastName: '', email: '', phone: '', hourlyRate: '', level: ''
   });
 
   const handleAddStudent = async (e: React.FormEvent) => {
@@ -45,7 +46,7 @@ const StudentsManagement: React.FC<StudentsManagementProps> = ({ students, setSt
       const response = await studentsService.create(studentData);
       if (response.success) {
         setStudents([...students, response.student]);
-        setNewStudent({ firstName: '', lastName: '', email: '', phone: '', hourlyRate: '' });
+        setNewStudent({ firstName: '', lastName: '', email: '', phone: '', hourlyRate: '', level: '' });
         setShowAddStudent(false);
       } else {
         alert('Erreur lors de l\'ajout de l\'élève: ' + (response.message || 'Erreur inconnue'));
@@ -63,7 +64,8 @@ const StudentsManagement: React.FC<StudentsManagementProps> = ({ students, setSt
       lastName: student.lastName || '',
       email: student.email || '',
       phone: student.phone || '',
-      hourlyRate: (student.hourlyRate || 0).toString()
+      hourlyRate: (student.hourlyRate || 0).toString(),
+      level: student.level || ''
     });
     setShowEditStudent(true);
   };
@@ -90,7 +92,7 @@ const StudentsManagement: React.FC<StudentsManagementProps> = ({ students, setSt
         setStudents(students.map(s => 
           s.id === editingStudent.id ? response.student : s
         ));
-        setEditStudent({ firstName: '', lastName: '', email: '', phone: '', hourlyRate: '' });
+        setEditStudent({ firstName: '', lastName: '', email: '', phone: '', hourlyRate: '', level: '' });
         setEditingStudent(null);
         setShowEditStudent(false);
       } else {
@@ -160,6 +162,20 @@ const StudentsManagement: React.FC<StudentsManagementProps> = ({ students, setSt
                 value={newStudent.phone}
                 onChange={(e) => setNewStudent({...newStudent, phone: e.target.value})}
               />
+              <select
+                value={newStudent.level}
+                onChange={(e) => setNewStudent({...newStudent, level: e.target.value})}
+                required
+              >
+                <option value="">Sélectionner le niveau</option>
+                <option value="1cem">1CEM</option>
+                <option value="2cem">2CEM</option>
+                <option value="3cem">3CEM</option>
+                <option value="4cem">4CEM</option>
+                <option value="1l">1L</option>
+                <option value="2l">2L</option>
+                <option value="3l">3L</option>
+              </select>
               <input
                 type="number"
                 placeholder="Tarif par séance (DA)"
@@ -209,6 +225,20 @@ const StudentsManagement: React.FC<StudentsManagementProps> = ({ students, setSt
                 value={editStudent.phone}
                 onChange={(e) => setEditStudent({...editStudent, phone: e.target.value})}
               />
+              <select
+                value={editStudent.level}
+                onChange={(e) => setEditStudent({...editStudent, level: e.target.value})}
+                required
+              >
+                <option value="">Sélectionner le niveau</option>
+                <option value="1cem">1CEM</option>
+                <option value="2cem">2CEM</option>
+                <option value="3cem">3CEM</option>
+                <option value="4cem">4CEM</option>
+                <option value="1l">1L</option>
+                <option value="2l">2L</option>
+                <option value="3l">3L</option>
+              </select>
               <input
                 type="number"
                 placeholder="Tarif par séance (DA)"
@@ -251,6 +281,10 @@ const StudentsManagement: React.FC<StudentsManagementProps> = ({ students, setSt
               <div className="detail-item">
                 <span className="detail-label"> Téléphone</span>
                 <span className="detail-value">{student.phone}</span>
+              </div>
+              <div className="detail-item">
+                <span className="detail-label"> Niveau</span>
+                <span className="detail-value">{student.level ? student.level.toUpperCase() : 'Non défini'}</span>
               </div>
               <div className="detail-item">
                 <span className="detail-label"> Tarif</span>

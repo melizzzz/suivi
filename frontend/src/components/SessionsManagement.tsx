@@ -9,6 +9,7 @@ interface Student {
   email: string;
   phone: string;
   hourlyRate: number;
+  level: string;
   active: boolean;
 }
 

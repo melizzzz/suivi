@@ -1,1 +1,14 @@
-[]
+[
+  {
+    "name": "test",
+    "studentIds": [
+      "1",
+      "1759090963184vk5rzcp0u"
+    ],
+    "hourlyRate": 4,
+    "description": "test",
+    "active": true,
+    "id": "1759091862035di0sce57f",
+    "createdAt": "2025-09-28T20:37:42.035Z"
+  }
+]

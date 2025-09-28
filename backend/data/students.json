@@ -8,10 +8,25 @@
     "subjects": [
       "Physique"
     ],
-    "hourlyRate": 32,
+    "hourlyRate": -13,
+    "level": "1l",
     "parentId": "2",
     "createdAt": "2025-09-17T22:34:55.829Z",
     "active": true,
-    "updatedAt": "2025-09-28T20:20:06.452Z"
+    "updatedAt": "2025-09-28T20:45:31.495Z"
+  },
+  {
+    "firstName": "tesqt",
+    "lastName": "tet",
+    "email": "tes@test",
+    "phone": "7890",
+    "subjects": [
+      "Physique"
+    ],
+    "hourlyRate": 789,
+    "level": "3cem",
+    "active": true,
+    "id": "1759090963184vk5rzcp0u",
+    "createdAt": "2025-09-28T20:22:43.184Z"
   }
 ]

@@ -90,7 +90,7 @@ router.post('/', authenticateToken, async (req, res) => {
       });
     }
 
-    const { firstName, lastName, email, phone, subjects, hourlyRate, parentId } = req.body;
+    const { firstName, lastName, email, phone, subjects, hourlyRate, level, parentId } = req.body;
 
     if (!firstName || !lastName || !hourlyRate) {
       return res.status(400).json({
@@ -106,6 +106,7 @@ router.post('/', authenticateToken, async (req, res) => {
       phone,
       subjects: ['Physique'], // Matière fixe pour tous les élèves
       hourlyRate: parseFloat(hourlyRate),
+      level: level || '',
       parentId,
       active: true
     });
@@ -137,7 +138,7 @@ router.put('/:id', authenticateToken, async (req, res) => {
       });
     }
 
-    const { firstName, lastName, email, phone, subjects, hourlyRate, parentId, active } = req.body;
+    const { firstName, lastName, email, phone, subjects, hourlyRate, level, parentId, active } = req.body;
 
     const updates = {};
     if (firstName) updates.firstName = firstName;
@@ -146,6 +147,7 @@ router.put('/:id', authenticateToken, async (req, res) => {
     if (phone) updates.phone = phone;
     if (subjects) updates.subjects = Array.isArray(subjects) ? subjects : [subjects];
     if (hourlyRate) updates.hourlyRate = parseFloat(hourlyRate);
+    if (level !== undefined) updates.level = level;
     if (parentId) updates.parentId = parentId;
     if (typeof active === 'boolean') updates.active = active;
 
