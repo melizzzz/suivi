@@ -15,7 +15,7 @@ interface Student {
   lastName: string;
   email: string;
   phone: string;
-  sessionRate: number;
+  hourlyRate: number;
   active: boolean;
 }
 

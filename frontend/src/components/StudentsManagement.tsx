@@ -7,7 +7,7 @@ interface Student {
   lastName: string;
   email: string;
   phone: string;
-  sessionRate: number;
+  hourlyRate: number;
   active: boolean;
 }
 
@@ -18,26 +18,87 @@ interface StudentsManagementProps {
 
 const StudentsManagement: React.FC<StudentsManagementProps> = ({ students, setStudents }) => {
   const [showAddStudent, setShowAddStudent] = useState(false);
+  const [showEditStudent, setShowEditStudent] = useState(false);
+  const [editingStudent, setEditingStudent] = useState<Student | null>(null);
   const [newStudent, setNewStudent] = useState({
-    firstName: '', lastName: '', email: '', phone: '', sessionRate: ''
+    firstName: '', lastName: '', email: '', phone: '', hourlyRate: ''
+  });
+  const [editStudent, setEditStudent] = useState({
+    firstName: '', lastName: '', email: '', phone: '', hourlyRate: ''
   });
 
   const handleAddStudent = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
+      const hourlyRate = parseFloat(newStudent.hourlyRate);
+      if (isNaN(hourlyRate)) {
+        alert('Le tarif doit être un nombre valide');
+        return;
+      }
+
       const studentData = {
         ...newStudent,
-        sessionRate: parseFloat(newStudent.sessionRate)
+        hourlyRate: hourlyRate,
+        active: true
       };
       
       const response = await studentsService.create(studentData);
       if (response.success) {
         setStudents([...students, response.student]);
-        setNewStudent({ firstName: '', lastName: '', email: '', phone: '', sessionRate: '' });
+        setNewStudent({ firstName: '', lastName: '', email: '', phone: '', hourlyRate: '' });
         setShowAddStudent(false);
+      } else {
+        alert('Erreur lors de l\'ajout de l\'élève: ' + (response.message || 'Erreur inconnue'));
       }
     } catch (error) {
       console.error('Erreur lors de l\'ajout de l\'élève:', error);
+      alert('Erreur lors de l\'ajout de l\'élève. Vérifiez la console pour plus de détails.');
+    }
+  };
+
+  const handleEditStudent = (student: Student) => {
+    setEditingStudent(student);
+    setEditStudent({
+      firstName: student.firstName || '',
+      lastName: student.lastName || '',
+      email: student.email || '',
+      phone: student.phone || '',
+      hourlyRate: (student.hourlyRate || 0).toString()
+    });
+    setShowEditStudent(true);
+  };
+
+  const handleUpdateStudent = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editingStudent) return;
+    
+    try {
+      const hourlyRate = parseFloat(editStudent.hourlyRate);
+      if (isNaN(hourlyRate)) {
+        alert('Le tarif doit être un nombre valide');
+        return;
+      }
+
+      const studentData = {
+        ...editStudent,
+        hourlyRate: hourlyRate,
+        active: editingStudent.active
+      };
+      
+      const response = await studentsService.update(editingStudent.id, studentData);
+      if (response.success) {
+        setStudents(students.map(s => 
+          s.id === editingStudent.id ? response.student : s
+        ));
+        setEditStudent({ firstName: '', lastName: '', email: '', phone: '', hourlyRate: '' });
+        setEditingStudent(null);
+        setShowEditStudent(false);
+      } else {
+        alert('Erreur lors de la modification de l\'élève: ' + (response.message || 'Erreur inconnue'));
+      }
+    } catch (error) {
+      console.error('Erreur lors de la modification de l\'élève:', error);
+      alert('Erreur lors de la modification de l\'élève. Vérifiez la console pour plus de détails.');
     }
   };
 
@@ -102,13 +163,65 @@ const StudentsManagement: React.FC<StudentsManagementProps> = ({ students, setSt
               <input
                 type="number"
                 placeholder="Tarif par séance (DA)"
-                value={newStudent.sessionRate}
-                onChange={(e) => setNewStudent({...newStudent, sessionRate: e.target.value})}
+                value={newStudent.hourlyRate}
+                onChange={(e) => setNewStudent({...newStudent, hourlyRate: e.target.value})}
                 required
               />
               <div className="modal-buttons">
                 <button type="button" onClick={() => setShowAddStudent(false)}>Annuler</button>
                 <button type="submit">Ajouter</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {showEditStudent && editingStudent && (
+        <div className="modal-overlay">
+          <div className="modal">
+            <h3>Modifier l'élève</h3>
+            <form onSubmit={handleUpdateStudent}>
+              <div className="form-row">
+                <input
+                  type="text"
+                  placeholder="Prénom"
+                  value={editStudent.firstName}
+                  onChange={(e) => setEditStudent({...editStudent, firstName: e.target.value})}
+                  required
+                />
+                <input
+                  type="text"
+                  placeholder="Nom"
+                  value={editStudent.lastName}
+                  onChange={(e) => setEditStudent({...editStudent, lastName: e.target.value})}
+                  required
+                />
+              </div>
+              <input
+                type="email"
+                placeholder="Email"
+                value={editStudent.email}
+                onChange={(e) => setEditStudent({...editStudent, email: e.target.value})}
+              />
+              <input
+                type="tel"
+                placeholder="Téléphone"
+                value={editStudent.phone}
+                onChange={(e) => setEditStudent({...editStudent, phone: e.target.value})}
+              />
+              <input
+                type="number"
+                placeholder="Tarif par séance (DA)"
+                value={editStudent.hourlyRate}
+                onChange={(e) => setEditStudent({...editStudent, hourlyRate: e.target.value})}
+                required
+              />
+              <div className="modal-buttons">
+                <button type="button" onClick={() => {
+                  setShowEditStudent(false);
+                  setEditingStudent(null);
+                }}>Annuler</button>
+                <button type="submit">Modifier</button>
               </div>
             </form>
           </div>
@@ -124,6 +237,9 @@ const StudentsManagement: React.FC<StudentsManagementProps> = ({ students, setSt
               </div>
               <div className="student-name">
                 <h3>{student.firstName} {student.lastName}</h3>
+                <div className={`student-status ${student.active ? 'active' : 'inactive'}`}>
+                  {student.active ? 'Actif' : 'Inactif'}
+                </div>
               </div>
             </div>
             
@@ -138,16 +254,14 @@ const StudentsManagement: React.FC<StudentsManagementProps> = ({ students, setSt
               </div>
               <div className="detail-item">
                 <span className="detail-label"> Tarif</span>
-                <span className="detail-value">{student.sessionRate} DA/séance</span>
+                <span className="detail-value">{student.hourlyRate} DA/séance</span>
               </div>
             </div>
             
             <div className="student-actions">
               <button 
                 className="action-btn edit-btn"
-                onClick={() => {
-                  console.log('Modifier élève:', student.id);
-                }}
+                onClick={() => handleEditStudent(student)}
                 title="Modifier cet élève"
               >
                 Modifier

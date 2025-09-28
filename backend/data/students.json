@@ -8,9 +8,10 @@
     "subjects": [
       "Physique"
     ],
-    "hourlyRate": 25,
+    "hourlyRate": 32,
     "parentId": "2",
     "createdAt": "2025-09-17T22:34:55.829Z",
-    "active": true
+    "active": true,
+    "updatedAt": "2025-09-28T20:20:06.452Z"
   }
-] 
+]

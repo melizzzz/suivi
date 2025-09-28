@@ -1,11 +1,1 @@
-[
-  {
-    "id": "1",
-    "name": "Groupe Terminale S",
-    "studentIds": ["1", "1758184148201as378ker4"],
-    "hourlyRate": 20,
-    "description": "Cours de physique pour terminale scientifique - préparation bac",
-    "active": true,
-    "createdAt": "2025-09-18T08:30:00.000Z"
-  }
-]
+[]
