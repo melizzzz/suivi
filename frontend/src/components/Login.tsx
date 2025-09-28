@@ -45,15 +45,17 @@ const Login: React.FC = () => {
 
   return (
     <div className="login-container">
-      <div className="login-card">
+      <div className="login-content">
+        <div className="login-left">
+          <div className="login-card">
         <div className="login-header">
-          <h1>📚 Suivi des Élèves</h1>
-          <p>Connectez-vous à votre espace</p>
+          <h1>MELISSA</h1>
+          <p>M. Messaoudi vous souhaite la bienvenue</p>
         </div>
 
         <form onSubmit={handleSubmit} className="login-form">
           <div className="form-group">
-            <label htmlFor="email">Email</label>
+            <label htmlFor="email" style={{ textAlign: 'left' }}>Email</label>
             <input
               type="email"
               id="email"
@@ -104,6 +106,38 @@ const Login: React.FC = () => {
             >
               👨‍👩‍👧‍👦 Parent
             </button>
+          </div>
+        </div>
+        </div>
+        </div>
+        
+        <div className="login-right">
+          <div className="earth-background">
+            <div className="stars">
+              {Array.from({ length: 50 }, (_, i) => (
+                <div
+                  key={i}
+                  className="star"
+                  style={{
+                    position: 'absolute',
+                    width: `${Math.random() * 3 + 1}px`,
+                    height: `${Math.random() * 3 + 1}px`,
+                    backgroundColor: 'white',
+                    borderRadius: '50%',
+                    left: `${Math.random() * 100}%`,
+                    top: `${Math.random() * 100}%`,
+                    animation: `twinkle ${Math.random() * 3 + 2}s infinite alternate`,
+                    opacity: Math.random()
+                  }}
+                />
+              ))}
+            </div>
+            
+            <div className="earth-planet">
+              <div className="continent continent-1" />
+              <div className="continent continent-2" />
+              <div className="continent continent-3" />
+            </div>
           </div>
         </div>
       </div>

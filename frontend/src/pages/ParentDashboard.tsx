@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { useAuth } from '../context/AuthContext';
+import React, { useState, useEffect, useCallback } from 'react';
 import { studentsService, sessionsService, paymentsService } from '../services/api';
 import UserMenu from '../components/UserMenu';
 import './ParentDashboard.css';
@@ -41,11 +40,7 @@ const ParentDashboard: React.FC = () => {
   const [selectedStudent, setSelectedStudent] = useState<Student | null>(null);
   const [activeTab, setActiveTab] = useState<'overview' | 'sessions' | 'payments'>('overview');
 
-  useEffect(() => {
-    loadData();
-  }, []);
-
-  const loadData = async () => {
+  const loadData = useCallback(async () => {
     try {
       setLoading(true);
       
@@ -63,7 +58,11 @@ const ParentDashboard: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    loadData();
+  }, [loadData]);
 
   const loadStudentData = async (studentId: string) => {
     try {
