@@ -1016,6 +1016,29 @@
   color: #4A655A;
 }
 
+/* Styles pour l'affichage des membres de groupe */
+.group-members .detail-value {
+  display: block;
+  margin-top: 5px;
+}
+
+.members-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 5px;
+}
+
+.member-tag {
+  background: #4A655A;
+  color: white;
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
 @media (max-width: 768px) {
   .students-filters {
     flex-direction: column;
