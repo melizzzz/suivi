@@ -8,56 +8,7 @@ import SessionsManagement from '../components/SessionsManagement';
 import CalendarManagement from '../components/CalendarManagement';
 import PaymentsManagement from '../components/PaymentsManagement';
 import './TeacherDashboard.css';
-
-interface Student {
-  id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  hourlyRate: number;
-  level: string;
-  active: boolean;
-}
-
-interface Session {
-  id: string;
-  studentId?: string;
-  classId?: string;
-  date: string;
-  duration: number;
-  subject: string;
-  price: number;
-  notes: string;
-  status: string;
-  type: 'individual' | 'class';
-  student?: {
-    firstName: string;
-    lastName: string;
-  };
-  class?: {
-    id: string;
-    name: string;
-    students: Array<{
-      firstName: string;
-      lastName: string;
-    }>;
-  };
-}
-
-interface Class {
-  id: string;
-  name: string;
-  studentIds: string[];
-  hourlyRate: number;
-  description: string;
-  active: boolean;
-  students?: Array<{
-    id: string;
-    firstName: string;
-    lastName: string;
-  }>;
-}
+import type { Student, Session, Class, FixedSession } from '../types';
 
 interface Payment {
   id: string;
@@ -78,6 +29,7 @@ const TeacherDashboard: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'overview' | 'students' | 'sessions' | 'classes' | 'calendar' | 'payments'>('overview');
   const [students, setStudents] = useState<Student[]>([]);
   const [sessions, setSessions] = useState<Session[]>([]);
+  const [fixedSessions, setFixedSessions] = useState<FixedSession[]>([]);
   const [payments, setPayments] = useState<Payment[]>([]);
   const [classes, setClasses] = useState<Class[]>([]);
   const [loading, setLoading] = useState(true);
@@ -167,7 +119,7 @@ const TeacherDashboard: React.FC = () => {
           <div className="overview-tab">
             <div className="stats-grid">
               <div className="stat-card">
-                <h3>Élèves actifs</h3>
+               
                 <div className="stat-number">{totalStudents}</div>
               </div>
               <div className="stat-card">
@@ -206,6 +158,8 @@ const TeacherDashboard: React.FC = () => {
           <SessionsManagement 
             sessions={sessions} 
             setSessions={setSessions} 
+            fixedSessions={fixedSessions}
+            setFixedSessions={setFixedSessions}
             students={students} 
             classes={classes} 
           />

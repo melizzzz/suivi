@@ -3,34 +3,11 @@ import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import './SessionCalendar.css';
+import type { Session } from '../types';
 
 moment.locale('fr');
 const localizer = momentLocalizer(moment);
 
-interface Session {
-  id: string;
-  studentId?: string;
-  classId?: string;
-  date: string;
-  duration: number;
-  subject: string;
-  price: number;
-  notes: string;
-  status: string;
-  type: 'individual' | 'class';
-  student?: {
-    firstName: string;
-    lastName: string;
-  };
-  class?: {
-    id: string;
-    name: string;
-    students: Array<{
-      firstName: string;
-      lastName: string;
-    }>;
-  };
-}
 
 interface SessionCalendarProps {
   sessions: Session[];

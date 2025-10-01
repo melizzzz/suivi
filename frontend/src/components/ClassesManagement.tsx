@@ -1,31 +1,8 @@
+
 import React, { useState } from 'react';
 import { classesService } from '../services/api';
 import './ManagementComponents.css';
-
-interface Student {
-  id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  hourlyRate: number;
-  level: string;
-  active: boolean;
-}
-
-interface Class {
-  id: string;
-  name: string;
-  studentIds: string[];
-  hourlyRate: number;
-  description: string;
-  active: boolean;
-  students?: Array<{
-    id: string;
-    firstName: string;
-    lastName: string;
-  }>;
-}
+import type { Student, Class } from '../types';
 
 interface ClassesManagementProps {
   classes: Class[];

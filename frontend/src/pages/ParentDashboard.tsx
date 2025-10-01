@@ -2,25 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { studentsService, sessionsService, paymentsService } from '../services/api';
 import UserMenu from '../components/UserMenu';
 import './ParentDashboard.css';
-
-interface Student {
-  id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  subjects: string[];
-  hourlyRate: number;
-}
-
-interface Session {
-  id: string;
-  date: string;
-  duration: number;
-  subject: string;
-  price: number;
-  notes: string;
-  status: string;
-}
+import type { Student, Session } from '../types';
 
 interface Payment {
   id: string;

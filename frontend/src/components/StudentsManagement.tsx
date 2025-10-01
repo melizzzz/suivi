@@ -1,16 +1,7 @@
+
 import React, { useState } from 'react';
 import { studentsService } from '../services/api';
-
-interface Student {
-  id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  hourlyRate: number;
-  level: string;
-  active: boolean;
-}
+import type { Student } from '../types';
 
 interface StudentsManagementProps {
   students: Student[];
@@ -267,9 +258,7 @@ const StudentsManagement: React.FC<StudentsManagementProps> = ({ students, setSt
               </div>
               <div className="student-name">
                 <h3>{student.firstName} {student.lastName}</h3>
-                <div className={`student-status ${student.active ? 'active' : 'inactive'}`}>
-                  {student.active ? 'Actif' : 'Inactif'}
-                </div>
+               
               </div>
             </div>
             

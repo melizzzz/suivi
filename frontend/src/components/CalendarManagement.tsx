@@ -1,50 +1,7 @@
+
 import React, { useState, useEffect } from 'react';
 import './ManagementComponents.css';
-
-interface Student {
-  id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  hourlyRate: number;
-  level: string;
-  active: boolean;
-}
-
-interface Class {
-  id: string;
-  name: string;
-  studentIds: string[];
-  hourlyRate: number;
-  description: string;
-  active: boolean;
-}
-
-interface Session {
-  id: string;
-  studentId?: string;
-  classId?: string;
-  date: string;
-  duration: number;
-  subject: string;
-  price: number;
-  notes: string;
-  status: string;
-  type: 'individual' | 'class';
-  student?: {
-    firstName: string;
-    lastName: string;
-  };
-  class?: {
-    id: string;
-    name: string;
-    students: Array<{
-      firstName: string;
-      lastName: string;
-    }>;
-  };
-}
+import type { Student, Class, Session } from '../types';
 
 interface CalendarEvent {
   id: string;

@@ -6,56 +6,7 @@ import '../styles/labtox-premium.css';
 import '../styles/labtox-components.css';
 import '../styles/labtox-utilities.css';
 import '../styles/labtox-animations.css';
-
-interface Student {
-  id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  subjects: string[];
-  hourlyRate: number;
-  active: boolean;
-}
-
-interface Session {
-  id: string;
-  studentId?: string;
-  classId?: string;
-  date: string;
-  duration: number;
-  subject: string;
-  price: number;
-  notes: string;
-  status: string;
-  type: 'individual' | 'class';
-  student?: {
-    firstName: string;
-    lastName: string;
-  };
-  class?: {
-    id: string;
-    name: string;
-    students: Array<{
-      firstName: string;
-      lastName: string;
-    }>;
-  };
-}
-
-interface Class {
-  id: string;
-  name: string;
-  studentIds: string[];
-  hourlyRate: number;
-  description: string;
-  active: boolean;
-  students?: Array<{
-    id: string;
-    firstName: string;
-    lastName: string;
-  }>;
-}
+import type { Student, Session, Class } from '../types';
 
 interface Payment {
   id: string;

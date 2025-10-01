@@ -90,21 +90,20 @@ const Login: React.FC = () => {
         </form>
 
         <div className="demo-section">
-          <h3>Comptes de démonstration</h3>
           <div className="demo-buttons">
             <button 
               className="demo-btn teacher"
               onClick={() => handleDemoLogin('teacher')}
               disabled={loading}
             >
-              👨‍🏫 Professeur
+               Professeur
             </button>
             <button 
               className="demo-btn parent"
               onClick={() => handleDemoLogin('parent')}
               disabled={loading}
             >
-              👨‍👩‍👧‍👦 Parent
+               Parent
             </button>
           </div>
         </div>

@@ -182,4 +182,104 @@ export const classesService = {
   }
 };
 
+// Services pour les séances fixes (localStorage en attendant l'API backend)
+export const fixedSessionsService = {
+  getAll: async () => {
+    try {
+      const stored = localStorage.getItem('fixedSessions');
+      const fixedSessions = stored ? JSON.parse(stored) : [];
+      
+      // Enrichir avec les données des groupes
+      const classesResponse = await classesService.getAll();
+      if (classesResponse.success) {
+        const enrichedSessions = fixedSessions.map((session: any) => ({
+          ...session,
+          class: classesResponse.classes.find((c: any) => c.id === session.classId)
+        }));
+        return { success: true, fixedSessions: enrichedSessions };
+      }
+      
+      return { success: true, fixedSessions };
+    } catch (error) {
+      console.error('Erreur lors du chargement des séances fixes:', error);
+      return { success: false, message: 'Erreur lors du chargement' };
+    }
+  },
+
+  create: async (sessionData: any) => {
+    try {
+      const stored = localStorage.getItem('fixedSessions');
+      const fixedSessions = stored ? JSON.parse(stored) : [];
+      
+      const newSession = {
+        id: Date.now().toString(),
+        ...sessionData,
+        active: true
+      };
+      
+      // Enrichir avec les données du groupe
+      const classesResponse = await classesService.getAll();
+      if (classesResponse.success) {
+        const classData = classesResponse.classes.find((c: any) => c.id === sessionData.classId);
+        if (classData) {
+          newSession.class = classData;
+        }
+      }
+      
+      fixedSessions.push(newSession);
+      localStorage.setItem('fixedSessions', JSON.stringify(fixedSessions));
+      
+      return { success: true, fixedSession: newSession };
+    } catch (error) {
+      console.error('Erreur lors de la création de la séance fixe:', error);
+      return { success: false, message: 'Erreur lors de la création' };
+    }
+  },
+
+  delete: async (id: string) => {
+    try {
+      const stored = localStorage.getItem('fixedSessions');
+      const fixedSessions = stored ? JSON.parse(stored) : [];
+      
+      const filteredSessions = fixedSessions.filter((session: any) => session.id !== id);
+      localStorage.setItem('fixedSessions', JSON.stringify(filteredSessions));
+      
+      return { success: true };
+    } catch (error) {
+      console.error('Erreur lors de la suppression de la séance fixe:', error);
+      return { success: false, message: 'Erreur lors de la suppression' };
+    }
+  },
+
+  update: async (id: string, sessionData: any) => {
+    try {
+      const stored = localStorage.getItem('fixedSessions');
+      const fixedSessions = stored ? JSON.parse(stored) : [];
+      
+      const sessionIndex = fixedSessions.findIndex((session: any) => session.id === id);
+      if (sessionIndex === -1) {
+        return { success: false, message: 'Séance fixe non trouvée' };
+      }
+      
+      fixedSessions[sessionIndex] = { ...fixedSessions[sessionIndex], ...sessionData };
+      
+      // Enrichir avec les données du groupe
+      const classesResponse = await classesService.getAll();
+      if (classesResponse.success) {
+        const classData = classesResponse.classes.find((c: any) => c.id === sessionData.classId);
+        if (classData) {
+          fixedSessions[sessionIndex].class = classData;
+        }
+      }
+      
+      localStorage.setItem('fixedSessions', JSON.stringify(fixedSessions));
+      
+      return { success: true, fixedSession: fixedSessions[sessionIndex] };
+    } catch (error) {
+      console.error('Erreur lors de la modification de la séance fixe:', error);
+      return { success: false, message: 'Erreur lors de la modification' };
+    }
+  }
+};
+
 export default api;
