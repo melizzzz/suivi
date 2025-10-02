@@ -17,6 +17,14 @@
   min-height: 80px;
 }
 
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  position: relative;
+  z-index: 3;
+}
+
 .dashboard-header::before {
   content: '';
   position: absolute;
@@ -62,6 +70,19 @@
   color: white;
   border-color: #8d7b68;
   font-weight: 700;
+}
+
+.nav-button.back-to-dashboard {
+  background-color: rgba(255, 255, 255, 0.95);
+  color: #8d7b68;
+  border-color: rgba(255, 255, 255, 0.9);
+  font-weight: 600;
+}
+
+.nav-button.back-to-dashboard:hover {
+  background-color: white;
+  color: #5d4e37;
+  border-color: white;
 }
 
 .dashboard-content {
@@ -627,6 +648,71 @@
   border: none;
 }
 
+/* Styles améliorés pour les modales de séances fixes */
+.modal .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.modal .form-group label {
+  font-weight: 600;
+  color: #5d4e37;
+  font-size: 14px;
+  margin: 0;
+}
+
+.modal .form-row-compact {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  align-items: end;
+}
+
+.modal .form-row-triple {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+  align-items: end;
+}
+
+/* Style spécial pour le type de séance */
+.modal .form-group-inline {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+}
+
+.modal .form-group-inline label {
+  min-width: 120px;
+  margin: 0;
+}
+
+.modal .form-group-inline select {
+  flex: 1;
+  max-width: 200px;
+}
+
+/* Styles pour les séances fixes cliquables */
+.session-box.clickable {
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.session-box.clickable:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  border-color: #4A655A;
+}
+
+.click-hint {
+  font-size: 12px;
+  color: #8d7b68;
+  margin-top: 5px;
+  font-style: italic;
+}
+
 /* Grilles et listes */
 .students-container {
   display: grid;
@@ -899,21 +985,30 @@
     flex-direction: column;
     gap: 15px;
     text-align: center;
+    padding: 15px;
   }
   
-  .dashboard-nav {
+  .header-nav {
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+  }
+  
+  .nav-button {
+    padding: 8px 16px;
+    font-size: 13px;
+  }
+  
+  .header-actions {
     flex-direction: column;
-    padding: 0;
+    gap: 15px;
+    align-items: center;
+    width: 100%;
   }
   
-  .nav-btn {
-    border-bottom: none;
-    border-left: 3px solid transparent;
-  }
-  
-  .nav-btn.active {
-    border-left-color: #667eea;
-    border-bottom: none;
+  .header-actions .student-search {
+    max-width: 100%;
+    width: 100%;
   }
   
   .stats-grid {

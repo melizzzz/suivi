@@ -1,0 +1,102 @@
+[
+  {
+    "id": "fs-session-1",
+    "fixedSessionId": "1",
+    "date": "2024-09-02T14:00:00.000Z",
+    "duration": 60,
+    "price": 2500,
+    "notes": "Première séance de l'année. Introduction aux concepts de base.",
+    "students": [
+      {
+        "studentId": "1",
+        "present": true,
+        "notes": "Très motivé pour commencer l'année"
+      }
+    ],
+    "createdAt": "2024-09-02T16:00:00.000Z"
+  },
+  {
+    "id": "fs-session-2",
+    "fixedSessionId": "2",
+    "date": "2024-09-03T16:00:00.000Z",
+    "duration": 90,
+    "price": 3000,
+    "notes": "Révision des bases de mécanique",
+    "students": [
+      {
+        "studentId": "2",
+        "present": true,
+        "notes": "Bonne participation"
+      },
+      {
+        "studentId": "3",
+        "present": false,
+        "notes": "Absent - maladie"
+      },
+      {
+        "studentId": "4",
+        "present": true,
+        "notes": "A bien suivi le cours"
+      }
+    ],
+    "createdAt": "2024-09-03T18:00:00.000Z"
+  },
+  {
+    "id": "fs-session-3",
+    "fixedSessionId": "1",
+    "date": "2024-09-09T14:00:00.000Z",
+    "duration": 60,
+    "price": 2500,
+    "notes": "Séance sur les équations du mouvement",
+    "students": [
+      {
+        "studentId": "1",
+        "present": true,
+        "notes": "Très bonne compréhension des concepts"
+      }
+    ],
+    "createdAt": "2024-09-09T16:00:00.000Z"
+  },
+  {
+    "id": "fs-session-4",
+    "fixedSessionId": "2",
+    "date": "2024-09-10T16:00:00.000Z",
+    "duration": 90,
+    "price": 3000,
+    "notes": "Exercices pratiques sur les forces",
+    "students": [
+      {
+        "studentId": "2",
+        "present": true,
+        "notes": "Progrès remarquables"
+      },
+      {
+        "studentId": "3",
+        "present": true,
+        "notes": "Rattrapé le retard"
+      },
+      {
+        "studentId": "4",
+        "present": true,
+        "notes": "Participation active"
+      }
+    ],
+    "createdAt": "2024-09-10T18:00:00.000Z"
+  },
+  {
+    "id": "fs-session-5",
+    "fixedSessionId": "1",
+    "date": "2024-09-16T14:00:00.000Z",
+    "duration": 60,
+    "price": 2500,
+    "notes": "Applications numériques et résolution de problèmes",
+    "students": [
+      {
+        "studentId": "1",
+        "present": false,
+        "notes": "Absent - rendez-vous médical"
+      }
+    ],
+    "createdAt": "2024-09-16T16:00:00.000Z"
+  }
+]

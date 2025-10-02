@@ -186,20 +186,92 @@ export const classesService = {
 export const fixedSessionsService = {
   getAll: async () => {
     try {
-      const stored = localStorage.getItem('fixedSessions');
-      const fixedSessions = stored ? JSON.parse(stored) : [];
+      // CORRECTION TEMPORAIRE : Forcer la réinitialisation pour corriger le problème des jours
+      console.log('🔧 Correction des données de séances fixes...');
+      localStorage.removeItem('fixedSessions');
       
-      // Enrichir avec les données des groupes
-      const classesResponse = await classesService.getAll();
-      if (classesResponse.success) {
-        const enrichedSessions = fixedSessions.map((session: any) => ({
-          ...session,
-          class: classesResponse.classes.find((c: any) => c.id === session.classId)
-        }));
-        return { success: true, fixedSessions: enrichedSessions };
+      const stored = localStorage.getItem('fixedSessions');
+      let fixedSessions = stored ? JSON.parse(stored) : [];
+      
+      console.log('📅 Données avant initialisation:', fixedSessions);
+      
+      // Initialiser avec des données par défaut si vide
+      if (fixedSessions.length === 0) {
+        fixedSessions = [
+          {
+            id: '1',
+            type: 'individual',
+            studentId: '1',
+            dayOfWeek: 'sunday', 
+            startTime: '14:00',
+            duration: 60,
+            price: 2500,
+            notes: 'Cours de physique individuel',
+            active: true
+          },
+          {
+            id: '2',
+            type: 'group',
+            classId: '1',
+            dayOfWeek: 'wednesday',
+            startTime: '16:00', 
+            duration: 90,
+            price: 3000,
+            notes: 'Cours de physique en groupe',
+            active: true
+          }
+        ];
+        localStorage.setItem('fixedSessions', JSON.stringify(fixedSessions));
+        console.log('✅ Données après initialisation:', fixedSessions);
       }
       
-      return { success: true, fixedSessions };
+      // Migration : corriger les anciennes données qui pourraient avoir des dayOfWeek numériques
+      const needsMigration = fixedSessions.some((session: any) => 
+        session.dayOfWeek && ['1', '2', '3', '4', '5', '6', '7'].includes(session.dayOfWeek)
+      );
+      
+      if (needsMigration) {
+        const dayMapping: { [key: string]: string } = {
+          '1': 'monday',
+          '2': 'tuesday', 
+          '3': 'wednesday',
+          '4': 'thursday',
+          '5': 'friday',
+          '6': 'saturday',
+          '7': 'sunday'
+        };
+        
+        fixedSessions = fixedSessions.map((session: any) => ({
+          ...session,
+          dayOfWeek: dayMapping[session.dayOfWeek] || session.dayOfWeek
+        }));
+        
+        localStorage.setItem('fixedSessions', JSON.stringify(fixedSessions));
+      }
+      
+      // Enrichir avec les données des groupes et des étudiants
+      const [classesResponse, studentsResponse] = await Promise.all([
+        classesService.getAll(),
+        studentsService.getAll()
+      ]);
+      
+      const enrichedSessions = fixedSessions.map((session: any) => {
+        const enrichedSession = { ...session };
+        
+        // Ajouter les données du groupe si c'est une séance de groupe
+        if (session.classId && classesResponse.success) {
+          enrichedSession.class = classesResponse.classes.find((c: any) => c.id === session.classId);
+        }
+        
+        // Ajouter les données de l'étudiant si c'est une séance individuelle
+        if (session.studentId && studentsResponse.success) {
+          enrichedSession.student = studentsResponse.students.find((s: any) => s.id === session.studentId);
+        }
+        
+        return enrichedSession;
+      });
+      
+      return { success: true, fixedSessions: enrichedSessions };
     } catch (error) {
       console.error('Erreur lors du chargement des séances fixes:', error);
       return { success: false, message: 'Erreur lors du chargement' };
@@ -278,6 +350,218 @@ export const fixedSessionsService = {
     } catch (error) {
       console.error('Erreur lors de la modification de la séance fixe:', error);
       return { success: false, message: 'Erreur lors de la modification' };
+    }
+  }
+};
+
+// Service pour les séances réalisées (historique des séances fixes)
+export const realizedSessionsService = {
+  getAll: async () => {
+    try {
+      const stored = localStorage.getItem('realizedSessions');
+      if (stored) {
+        return { success: true, realizedSessions: JSON.parse(stored) };
+      }
+      
+      // Données par défaut
+      const defaultSessions = [
+        {
+          id: "fs-session-1",
+          fixedSessionId: "1",
+          date: "2024-09-02T14:00:00.000Z",
+          duration: 60,
+          price: 2500,
+          notes: "Première séance de l'année. Introduction aux concepts de base.",
+          students: [
+            {
+              studentId: "1",
+              firstName: "Ahmed",
+              lastName: "Benali",
+              present: true,
+              notes: "Très motivé pour commencer l'année"
+            }
+          ],
+          createdAt: "2024-09-02T16:00:00.000Z"
+        },
+        {
+          id: "fs-session-2",
+          fixedSessionId: "1",
+          date: "2024-09-09T14:00:00.000Z",
+          duration: 60,
+          price: 2500,
+          notes: "Séance sur les équations du mouvement",
+          students: [
+            {
+              studentId: "1",
+              firstName: "Ahmed",
+              lastName: "Benali",
+              present: true,
+              notes: "Très bonne compréhension des concepts"
+            }
+          ],
+          createdAt: "2024-09-09T16:00:00.000Z"
+        },
+        {
+          id: "fs-session-3",
+          fixedSessionId: "1", 
+          date: "2024-09-16T14:00:00.000Z",
+          duration: 60,
+          price: 2500,
+          notes: "Applications numériques et résolution de problèmes",
+          students: [
+            {
+              studentId: "1",
+              firstName: "Ahmed",
+              lastName: "Benali",
+              present: false,
+              notes: "Absent - rendez-vous médical"
+            }
+          ],
+          createdAt: "2024-09-16T16:00:00.000Z"
+        }
+      ];
+      
+      localStorage.setItem('realizedSessions', JSON.stringify(defaultSessions));
+      return { success: true, realizedSessions: defaultSessions };
+    } catch (error) {
+      console.error('Erreur lors du chargement des séances réalisées:', error);
+      return { success: false, message: 'Erreur lors du chargement' };
+    }
+  },
+
+  getByFixedSessionId: async (fixedSessionId: string) => {
+    try {
+      const response = await realizedSessionsService.getAll();
+      if (response.success) {
+        const sessions = response.realizedSessions.filter((s: any) => s.fixedSessionId === fixedSessionId);
+        return { success: true, realizedSessions: sessions };
+      }
+      return response;
+    } catch (error) {
+      console.error('Erreur lors de la récupération des séances:', error);
+      return { success: false, message: 'Erreur lors de la récupération' };
+    }
+  },
+
+  create: async (sessionData: any) => {
+    try {
+      const response = await realizedSessionsService.getAll();
+      if (!response.success) return response;
+      
+      const sessions = response.realizedSessions;
+      const newSession = {
+        id: `fs-session-${Date.now()}`,
+        ...sessionData,
+        createdAt: new Date().toISOString()
+      };
+      
+      sessions.push(newSession);
+      localStorage.setItem('realizedSessions', JSON.stringify(sessions));
+      
+      return { success: true, realizedSession: newSession };
+    } catch (error) {
+      console.error('Erreur lors de la création de la séance:', error);
+      return { success: false, message: 'Erreur lors de la création' };
+    }
+  },
+
+  update: async (sessionId: string, sessionData: any) => {
+    try {
+      const response = await realizedSessionsService.getAll();
+      if (!response.success) return response;
+      
+      const sessions = response.realizedSessions;
+      const sessionIndex = sessions.findIndex((s: any) => s.id === sessionId);
+      
+      if (sessionIndex === -1) {
+        return { success: false, message: 'Séance non trouvée' };
+      }
+      
+      sessions[sessionIndex] = { ...sessions[sessionIndex], ...sessionData };
+      localStorage.setItem('realizedSessions', JSON.stringify(sessions));
+      
+      return { success: true, realizedSession: sessions[sessionIndex] };
+    } catch (error) {
+      console.error('Erreur lors de la modification de la séance:', error);
+      return { success: false, message: 'Erreur lors de la modification' };
+    }
+  },
+
+  delete: async (sessionId: string) => {
+    try {
+      const response = await realizedSessionsService.getAll();
+      if (!response.success) return response;
+      
+      const sessions = response.realizedSessions;
+      const filteredSessions = sessions.filter((s: any) => s.id !== sessionId);
+      
+      localStorage.setItem('realizedSessions', JSON.stringify(filteredSessions));
+      
+      return { success: true };
+    } catch (error) {
+      console.error('Erreur lors de la suppression de la séance:', error);
+      return { success: false, message: 'Erreur lors de la suppression' };
+    }
+  }
+};
+
+// Service pour les présences des étudiants
+export const studentAttendanceService = {
+  getStudentAttendance: async (studentId: string) => {
+    try {
+      const response = await realizedSessionsService.getAll();
+      if (!response.success) return response;
+      
+      // Filtrer toutes les séances où cet étudiant était présent/absent
+      const studentAttendance = response.realizedSessions
+        .filter((session: any) => 
+          session.students.some((student: any) => student.studentId === studentId)
+        )
+        .map((session: any) => {
+          const studentData = session.students.find((student: any) => student.studentId === studentId);
+          return {
+            sessionId: session.id,
+            fixedSessionId: session.fixedSessionId,
+            date: session.date,
+            duration: session.duration,
+            price: session.price,
+            notes: session.notes,
+            present: studentData.present,
+            studentNotes: studentData.notes
+          };
+        })
+        .sort((a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
+      return { success: true, attendance: studentAttendance };
+    } catch (error) {
+      console.error('Erreur lors de la récupération des présences:', error);
+      return { success: false, message: 'Erreur lors de la récupération' };
+    }
+  },
+
+  getStudentStats: async (studentId: string) => {
+    try {
+      const response = await studentAttendanceService.getStudentAttendance(studentId);
+      if (!response.success || !('attendance' in response)) return response;
+
+      const attendance = response.attendance;
+      const totalSessions = attendance.length;
+      const presentSessions = attendance.filter((session: any) => session.present).length;
+      const absentSessions = totalSessions - presentSessions;
+      const attendanceRate = totalSessions > 0 ? (presentSessions / totalSessions) * 100 : 0;
+
+      return {
+        success: true,
+        stats: {
+          totalSessions,
+          presentSessions,
+          absentSessions,
+          attendanceRate: Math.round(attendanceRate * 100) / 100
+        }
+      };
+    } catch (error) {
+      console.error('Erreur lors du calcul des statistiques:', error);
+      return { success: false, message: 'Erreur lors du calcul' };
     }
   }
 };

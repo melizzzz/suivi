@@ -29,6 +29,19 @@
   margin-bottom: 15px;
 }
 
+.student-box-header.clickable {
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 8px;
+  border-radius: 8px;
+  margin: -8px -8px 7px -8px;
+}
+
+.student-box-header.clickable:hover {
+  background: rgba(141, 123, 104, 0.1);
+  transform: scale(1.02);
+}
+
 .student-avatar {
   width: 50px;
   height: 50px;

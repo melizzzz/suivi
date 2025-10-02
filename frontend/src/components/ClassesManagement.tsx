@@ -385,7 +385,7 @@ const ClassesManagement: React.FC<ClassesManagementProps> = ({ classes, setClass
                 onClick={() => handleDeleteClass(classItem.id, classItem.name)}
                 title="Supprimer ce groupe"
               >
-                🗑️ Supprimer
+                 Supprimer
               </button>
             </div>
           </div>

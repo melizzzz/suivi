@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { studentsService } from '../services/api';
 import type { Student } from '../types';
+import StudentDetail from './StudentDetail';
 
 interface StudentsManagementProps {
   students: Student[];
@@ -12,6 +13,7 @@ const StudentsManagement: React.FC<StudentsManagementProps> = ({ students, setSt
   const [showAddStudent, setShowAddStudent] = useState(false);
   const [showEditStudent, setShowEditStudent] = useState(false);
   const [editingStudent, setEditingStudent] = useState<Student | null>(null);
+  const [selectedStudent, setSelectedStudent] = useState<Student | null>(null);
   const [newStudent, setNewStudent] = useState({
     firstName: '', lastName: '', email: '', phone: '', hourlyRate: '', level: ''
   });
@@ -107,6 +109,16 @@ const StudentsManagement: React.FC<StudentsManagementProps> = ({ students, setSt
       }
     }
   };
+
+  // Si un étudiant est sélectionné, afficher sa page de détail
+  if (selectedStudent) {
+    return (
+      <StudentDetail 
+        student={selectedStudent} 
+        onBack={() => setSelectedStudent(null)} 
+      />
+    );
+  }
 
   return (
     <div className="students-tab">
@@ -252,7 +264,11 @@ const StudentsManagement: React.FC<StudentsManagementProps> = ({ students, setSt
       <div className="students-container">
         {students.map(student => (
           <div key={student.id} className="student-box">
-            <div className="student-box-header">
+            <div 
+              className="student-box-header clickable"
+              onClick={() => setSelectedStudent(student)}
+              title="Cliquer pour voir le profil complet"
+            >
               <div className="student-avatar">
                 {student.firstName.charAt(0)}{student.lastName.charAt(0)}
               </div>
@@ -284,14 +300,20 @@ const StudentsManagement: React.FC<StudentsManagementProps> = ({ students, setSt
             <div className="student-actions">
               <button 
                 className="action-btn edit-btn"
-                onClick={() => handleEditStudent(student)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleEditStudent(student);
+                }}
                 title="Modifier cet élève"
               >
                 Modifier
               </button>
               <button 
                 className="action-btn delete-btn"
-                onClick={() => handleDeleteStudent(student.id, `${student.firstName} ${student.lastName}`)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleDeleteStudent(student.id, `${student.firstName} ${student.lastName}`);
+                }}
                 title="Supprimer cet élève"
               >
                 Supprimer

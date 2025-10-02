@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { sessionsService, fixedSessionsService } from '../services/api';
 import './ManagementComponents.css';
+import SessionHistory from './SessionHistory';
 import type { Student, Class, Session, FixedSession } from '../types';
 
 interface SessionsManagementProps {
@@ -27,6 +28,8 @@ const SessionsManagement: React.FC<SessionsManagementProps> = ({
   const [showAddFixedSession, setShowAddFixedSession] = useState(false);
   const [showEditFixedSession, setShowEditFixedSession] = useState(false);
   const [editingFixedSession, setEditingFixedSession] = useState<FixedSession | null>(null);
+  const [showSessionHistory, setShowSessionHistory] = useState(false);
+  const [selectedFixedSession, setSelectedFixedSession] = useState<FixedSession | null>(null);
   const [newSession, setNewSession] = useState({
     studentId: '', classId: '', date: '', duration: '', subject: '', price: '', notes: '', type: 'individual'
   });
@@ -202,6 +205,11 @@ const SessionsManagement: React.FC<SessionsManagementProps> = ({
     }
   };
 
+  const handleViewSessionHistory = (fixedSession: FixedSession) => {
+    setSelectedFixedSession(fixedSession);
+    setShowSessionHistory(true);
+  };
+
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('fr-FR', {
       day: '2-digit',
@@ -224,6 +232,19 @@ const SessionsManagement: React.FC<SessionsManagementProps> = ({
     };
     return days[dayOfWeek] || dayOfWeek;
   };
+
+  // Si on affiche l'historique, retourner le composant SessionHistory
+  if (showSessionHistory && selectedFixedSession) {
+    return (
+      <SessionHistory 
+        fixedSession={selectedFixedSession}
+        onBack={() => {
+          setShowSessionHistory(false);
+          setSelectedFixedSession(null);
+        }}
+      />
+    );
+  }
 
   return (
     <div className="sessions-tab">
@@ -254,7 +275,7 @@ const SessionsManagement: React.FC<SessionsManagementProps> = ({
       {activeTab === 'fixed' && (
         <div className="sessions-container">
           {fixedSessions.map(fixedSession => (
-            <div key={fixedSession.id} className="session-box fixed-session">
+            <div key={fixedSession.id} className="session-box fixed-session clickable" onClick={() => handleViewSessionHistory(fixedSession)}>
               <div className="session-box-header">
                 <div className="session-type-icon">
                   {fixedSession.type === 'individual' ? '👤' : '👥'}
@@ -272,6 +293,7 @@ const SessionsManagement: React.FC<SessionsManagementProps> = ({
                   <p className="session-schedule">
                      Tous les {getDayName(fixedSession.dayOfWeek)} à {fixedSession.startTime}
                   </p>
+                  <p className="click-hint">📅 Cliquer pour voir l'historique</p>
                 </div>
               </div>
               <div className="session-details">
@@ -294,20 +316,26 @@ const SessionsManagement: React.FC<SessionsManagementProps> = ({
                   <p>{fixedSession.notes}</p>
                 </div>
               )}
-              <div className="session-actions">
+              <div className="session-actions" onClick={(e) => e.stopPropagation()}>
                 <button 
                   className="action-btn edit-btn"
-                  onClick={() => handleEditFixedSession(fixedSession)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleEditFixedSession(fixedSession);
+                  }}
                   title="Modifier cette séance fixe"
                 >
                   ✏️ Modifier
                 </button>
                 <button 
                   className="action-btn delete-btn"
-                  onClick={() => handleDeleteFixedSession(fixedSession.id)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleDeleteFixedSession(fixedSession.id);
+                  }}
                   title="Supprimer cette séance fixe"
                 >
-                  🗑️ Supprimer
+                   Supprimer
                 </button>
               </div>
             </div>
@@ -321,7 +349,8 @@ const SessionsManagement: React.FC<SessionsManagementProps> = ({
           <div className="modal">
             <h3>Créer une séance fixe</h3>
             <form onSubmit={handleAddFixedSession}>
-              <div className="form-group">
+              {/* Type de séance - inline compact */}
+              <div className="form-group-inline">
                 <label>Type de séance</label>
                 <select 
                   value={newFixedSession.type} 
@@ -333,6 +362,7 @@ const SessionsManagement: React.FC<SessionsManagementProps> = ({
                 </select>
               </div>
 
+              {/* Étudiant ou Classe selon le type */}
               {newFixedSession.type === 'individual' && (
                 <div className="form-group">
                   <label>Étudiant</label>
@@ -369,55 +399,72 @@ const SessionsManagement: React.FC<SessionsManagementProps> = ({
                 </div>
               )}
 
-              <div className="form-group">
-                <label>Jour de la semaine</label>
-                <select 
-                  value={newFixedSession.dayOfWeek} 
-                  onChange={(e) => setNewFixedSession({...newFixedSession, dayOfWeek: e.target.value})}
-                  required
-                >
-                  <option value="">Sélectionner un jour</option>
-                  <option value="monday">Lundi</option>
-                  <option value="tuesday">Mardi</option>
-                  <option value="wednesday">Mercredi</option>
-                  <option value="thursday">Jeudi</option>
-                  <option value="friday">Vendredi</option>
-                  <option value="saturday">Samedi</option>
-                  <option value="sunday">Dimanche</option>
-                </select>
+              {/* Jour et heure sur la même ligne */}
+              <div className="form-row-compact">
+                <div className="form-group">
+                  <label>Jour de la semaine</label>
+                  <select 
+                    value={newFixedSession.dayOfWeek} 
+                    onChange={(e) => setNewFixedSession({...newFixedSession, dayOfWeek: e.target.value})}
+                    required
+                  >
+                    <option value="">Sélectionner un jour</option>
+                    <option value="monday">Lundi</option>
+                    <option value="tuesday">Mardi</option>
+                    <option value="wednesday">Mercredi</option>
+                    <option value="thursday">Jeudi</option>
+                    <option value="friday">Vendredi</option>
+                    <option value="saturday">Samedi</option>
+                    <option value="sunday">Dimanche</option>
+                  </select>
+                </div>
+
+                <div className="form-group">
+                  <label>Heure de début</label>
+                  <input 
+                    type="time" 
+                    value={newFixedSession.startTime} 
+                    onChange={(e) => setNewFixedSession({...newFixedSession, startTime: e.target.value})}
+                    required 
+                  />
+                </div>
               </div>
 
-              <div className="form-group">
-                <label>Heure de début</label>
-                <input 
-                  type="time" 
-                  value={newFixedSession.startTime} 
-                  onChange={(e) => setNewFixedSession({...newFixedSession, startTime: e.target.value})}
-                  required 
-                />
+              {/* Durée et prix sur la même ligne */}
+              <div className="form-row-compact">
+                <div className="form-group">
+                  <label>Durée (minutes)</label>
+                  <input 
+                    type="number" 
+                    value={newFixedSession.duration} 
+                    onChange={(e) => setNewFixedSession({...newFixedSession, duration: parseInt(e.target.value) || 0})}
+                    required 
+                    min="15"
+                    step="15"
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label>Prix (DA)</label>
+                  <input 
+                    type="number" 
+                    value={newFixedSession.price} 
+                    onChange={(e) => setNewFixedSession({...newFixedSession, price: parseFloat(e.target.value) || 0})}
+                    required 
+                    min="0"
+                    step="0.01"
+                  />
+                </div>
               </div>
 
+              {/* Notes en pleine largeur */}
               <div className="form-group">
-                <label>Durée (minutes)</label>
-                <input 
-                  type="number" 
-                  value={newFixedSession.duration} 
-                  onChange={(e) => setNewFixedSession({...newFixedSession, duration: parseInt(e.target.value) || 0})}
-                  required 
-                  min="15"
-                  step="15"
-                />
-              </div>
-
-              <div className="form-group">
-                <label>Prix (DA)</label>
-                <input 
-                  type="number" 
-                  value={newFixedSession.price} 
-                  onChange={(e) => setNewFixedSession({...newFixedSession, price: parseFloat(e.target.value) || 0})}
-                  required 
-                  min="0"
-                  step="0.01"
+                <label>Notes (optionnel)</label>
+                <textarea 
+                  value={newFixedSession.notes || ''} 
+                  onChange={(e) => setNewFixedSession({...newFixedSession, notes: e.target.value})}
+                  placeholder="Notes ou commentaires..."
+                  rows={3}
                 />
               </div>
 
@@ -436,7 +483,8 @@ const SessionsManagement: React.FC<SessionsManagementProps> = ({
           <div className="modal">
             <h2>Modifier la séance fixe</h2>
             <form onSubmit={handleUpdateFixedSession}>
-              <div className="form-group">
+              {/* Type de séance - inline compact */}
+              <div className="form-group-inline">
                 <label>Type de séance</label>
                 <select 
                   value={editFixedSession.type} 
@@ -448,6 +496,7 @@ const SessionsManagement: React.FC<SessionsManagementProps> = ({
                 </select>
               </div>
 
+              {/* Étudiant ou Classe selon le type */}
               {editFixedSession.type === 'individual' && (
                 <div className="form-group">
                   <label>Étudiant</label>
@@ -484,55 +533,72 @@ const SessionsManagement: React.FC<SessionsManagementProps> = ({
                 </div>
               )}
 
-              <div className="form-group">
-                <label>Jour de la semaine</label>
-                <select 
-                  value={editFixedSession.dayOfWeek} 
-                  onChange={(e) => setEditFixedSession({...editFixedSession, dayOfWeek: e.target.value})}
-                  required
-                >
-                  <option value="">Sélectionner un jour</option>
-                  <option value="monday">Lundi</option>
-                  <option value="tuesday">Mardi</option>
-                  <option value="wednesday">Mercredi</option>
-                  <option value="thursday">Jeudi</option>
-                  <option value="friday">Vendredi</option>
-                  <option value="saturday">Samedi</option>
-                  <option value="sunday">Dimanche</option>
-                </select>
+              {/* Jour et heure sur la même ligne */}
+              <div className="form-row-compact">
+                <div className="form-group">
+                  <label>Jour de la semaine</label>
+                  <select 
+                    value={editFixedSession.dayOfWeek} 
+                    onChange={(e) => setEditFixedSession({...editFixedSession, dayOfWeek: e.target.value})}
+                    required
+                  >
+                    <option value="">Sélectionner un jour</option>
+                    <option value="monday">Lundi</option>
+                    <option value="tuesday">Mardi</option>
+                    <option value="wednesday">Mercredi</option>
+                    <option value="thursday">Jeudi</option>
+                    <option value="friday">Vendredi</option>
+                    <option value="saturday">Samedi</option>
+                    <option value="sunday">Dimanche</option>
+                  </select>
+                </div>
+
+                <div className="form-group">
+                  <label>Heure de début</label>
+                  <input 
+                    type="time" 
+                    value={editFixedSession.startTime} 
+                    onChange={(e) => setEditFixedSession({...editFixedSession, startTime: e.target.value})}
+                    required 
+                  />
+                </div>
               </div>
 
-              <div className="form-group">
-                <label>Heure de début</label>
-                <input 
-                  type="time" 
-                  value={editFixedSession.startTime} 
-                  onChange={(e) => setEditFixedSession({...editFixedSession, startTime: e.target.value})}
-                  required 
-                />
+              {/* Durée et prix sur la même ligne */}
+              <div className="form-row-compact">
+                <div className="form-group">
+                  <label>Durée (minutes)</label>
+                  <input 
+                    type="number" 
+                    value={editFixedSession.duration} 
+                    onChange={(e) => setEditFixedSession({...editFixedSession, duration: parseInt(e.target.value)})}
+                    required 
+                    min="15"
+                    step="15"
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label>Prix (DA)</label>
+                  <input 
+                    type="number" 
+                    value={editFixedSession.price} 
+                    onChange={(e) => setEditFixedSession({...editFixedSession, price: parseFloat(e.target.value)})}
+                    required 
+                    min="0"
+                    step="0.01"
+                  />
+                </div>
               </div>
 
+              {/* Notes en pleine largeur */}
               <div className="form-group">
-                <label>Durée (minutes)</label>
-                <input 
-                  type="number" 
-                  value={editFixedSession.duration} 
-                  onChange={(e) => setEditFixedSession({...editFixedSession, duration: parseInt(e.target.value)})}
-                  required 
-                  min="15"
-                  step="15"
-                />
-              </div>
-
-              <div className="form-group">
-                <label>Prix (DA)</label>
-                <input 
-                  type="number" 
-                  value={editFixedSession.price} 
-                  onChange={(e) => setEditFixedSession({...editFixedSession, price: parseFloat(e.target.value)})}
-                  required 
-                  min="0"
-                  step="0.01"
+                <label>Notes (optionnel)</label>
+                <textarea 
+                  value={editFixedSession.notes || ''} 
+                  onChange={(e) => setEditFixedSession({...editFixedSession, notes: e.target.value})}
+                  placeholder="Notes ou commentaires..."
+                  rows={3}
                 />
               </div>
 

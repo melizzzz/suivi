@@ -7,6 +7,8 @@ import ClassesManagement from '../components/ClassesManagement';
 import SessionsManagement from '../components/SessionsManagement';
 import CalendarManagement from '../components/CalendarManagement';
 import PaymentsManagement from '../components/PaymentsManagement';
+import StudentSearch from '../components/StudentSearch';
+import StudentDetail from '../components/StudentDetail';
 import './TeacherDashboard.css';
 import type { Student, Session, Class, FixedSession } from '../types';
 
@@ -33,6 +35,7 @@ const TeacherDashboard: React.FC = () => {
   const [payments, setPayments] = useState<Payment[]>([]);
   const [classes, setClasses] = useState<Class[]>([]);
   const [loading, setLoading] = useState(true);
+  const [selectedStudent, setSelectedStudent] = useState<Student | null>(null);
 
 
 
@@ -66,8 +69,37 @@ const TeacherDashboard: React.FC = () => {
   const totalRevenue = sessions.reduce((sum, session) => sum + session.price, 0);
   const pendingPayments = payments.filter(p => p.status === 'pending').length;
 
+  const handleStudentSelect = (student: Student) => {
+    setSelectedStudent(student);
+  };
+
   if (loading) {
     return <div className="loading">🔄 Chargement...</div>;
+  }
+
+  // Si un étudiant est sélectionné depuis la recherche, afficher son profil
+  if (selectedStudent) {
+    return (
+      <div className="teacher-dashboard">
+        <header className="dashboard-header">
+          <nav className="header-nav">
+            <button
+              className="nav-button back-to-dashboard"
+              onClick={() => setSelectedStudent(null)}
+            >
+              ← Retour au tableau de bord
+            </button>
+          </nav>
+          <UserMenu />
+        </header>
+        <main className="dashboard-content">
+          <StudentDetail 
+            student={selectedStudent} 
+            onBack={() => setSelectedStudent(null)} 
+          />
+        </main>
+      </div>
+    );
   }
 
   return (
@@ -111,7 +143,14 @@ const TeacherDashboard: React.FC = () => {
             Paiements
           </button>
         </nav>
-        <UserMenu />
+        
+        <div className="header-actions">
+          <StudentSearch 
+            students={students.filter(s => s.active)} 
+            onStudentSelect={handleStudentSelect}
+          />
+          <UserMenu />
+        </div>
       </header>
 
       <main className="dashboard-content">
